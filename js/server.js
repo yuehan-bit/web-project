@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5500;
 app.use(express.json());
 
 // Serve static files (HTML, CSS, JS, images) from the parent directory
-app.use(express.static(path.join(__dirname, 'index.html')));
+app.use(express.static(path.join(__dirname, '..')));
 
 app.get('/', (req, res) => {
   res.send('Server is running!');

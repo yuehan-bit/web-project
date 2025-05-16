@@ -43,6 +43,7 @@ function handleLogin(event) {
     if (user) {
         // Save the user's name and userType in sessionStorage for personalization and role management
         sessionStorage.setItem("username", user.name);
+        sessionStorage.setItem("username", user.name);
         sessionStorage.setItem("userType", userType);
 
         // Show loading spinner

@@ -75,6 +75,7 @@
         font-size: 0.97rem;
         outline: none;
         transition: border 0.2s;
+        max-width: 50rem;
       }
       input:focus, select:focus {
         border: 1.5px solid #1e3c72;
@@ -171,20 +172,119 @@
         }
         .front, .back { min-height: 370px; }
       }
+      @media (max-width: 700px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0.7rem 0.5rem;
+        }
+        .logo {
+          flex-direction: row;
+          align-items: center;
+          gap: 0.7rem;
+          margin-bottom: 0.5rem;
+        }
+        .school-name {
+          font-size: 1rem;
+          margin-left: 0.5rem;
+        }
+        nav .nav-links {
+          flex-direction: column;
+          gap: 0.3rem;
+          padding-left: 0;
+          margin-top: 0.3rem;
+        }
+        nav .nav-links li {
+          margin: 0;
+        }
+        .portal-hero {
+          min-height: 100vh;
+          padding: 0.5rem 0;
+        }
+        #form-content {
+          padding: 0.7rem 0.1rem;
+          max-width: 99vw;
+        }
+        .flip-container {
+          min-width: unset;
+        }
+        .front, .back {
+          min-height: 370px;
+          padding: 0.5rem 0.2rem;
+        }
+        .title {
+          font-size: 1.1rem;
+        }
+        form {
+          gap: 0.5rem;
+        }
+        input, select {
+          font-size: 1rem;
+          padding: 0.45rem;
+        }
+        .portal-btn, #login-button, #signup-button {
+          font-size: 1rem;
+          padding: 0.6rem 0;
+        }
+      }
+      
+      @media (max-width: 400px) {
+        .school-name {
+          font-size: 0.93rem;
+        }
+        .front, .back {
+          min-height: 320px;
+          padding: 0.2rem 0.1rem;
+        }
+        .title {
+          font-size: 1rem;
+        }
+      }
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2vw;
+        background: #333;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      nav .nav-links {
+        display: flex;
+        gap: 1.2rem;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+      nav .nav-links li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: color 0.2s;
+      }
+      nav .nav-links li a:hover {
+        color: #FF9E4F;
+      }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <a href="../index.html"><img src="../img/Unit.jpg" alt="ROTC Logo" style="height:40px;"></a>
+            <a href="../index.html"><img src="../img/Unit.jpg" alt="ROTC Logo" style="height:40px; width: 40px;"></a>
             <a href="../index.html" class="school-name">PLV Naval Reserve Officers' Training Corps</a>
         </div>
         <nav>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../programs/program-info.html">Programs</a></li>
+                <!-- <li><a href="../programs/program-info.html">Programs</a></li>
                 <li><a href="../contact/contact.html">Contact Us</a></li>
-                <li><a href="../about/about.html">About</a></li>
+                <li><a href="../about/about.html">About</a></li> -->
             </ul>
         </nav>
     </header>

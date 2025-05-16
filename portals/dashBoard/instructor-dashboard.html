@@ -70,91 +70,71 @@
         
         <!-- Main Content -->
         <main>
-            <h1>Dashboard</h1>
-            
+            <h1>Instructor Dashboard</h1>
+            <div class="dashboard-welcome card">
+                <h2>Welcome, <span id="instructor-name">Instructor Johnson</span>!</h2>
+                <p>Manage schedules, and resources efficiently.</p>
+            </div>
             <!-- Top Stats Cards -->
-            <div class="analyse">
-                <div class="sales">
-                    <div class="status">
-                        <div class="info">
-                            <h3>Training Hours</h3>
-                            <h1>42.5</h1>
-                        </div>
-                        <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="percentage">
-                                <p>85%</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">schedule</span>
+                    <h3>Training Hours</h3>
+                    <p class="card-value">42.5</p>
+                    <p class="card-desc">Total hours this month</p>
                 </div>
-                <div class="visits">
-                    <div class="status">
-                        <div class="info">
-                            <h3>Leadership Score</h3>
-                            <h1>92</h1>
-                        </div>
-                        <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="percentage">
-                                <p>92%</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">star</span>
+                    <h3>Leadership Score</h3>
+                    <p class="card-value">92</p>
+                    <p class="card-desc">Your current score</p>
                 </div>
-                <div class="searches">
-                    <div class="status">
-                        <div class="info">
-                            <h3>Physical Fitness</h3>
-                            <h1>245</h1>
-                        </div>
-                        <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="percentage">
-                                <p>82%</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">fitness_center</span>
+                    <h3>Physical Fitness</h3>
+                    <p class="card-value">245</p>
+                    <p class="card-desc">Fitness points</p>
                 </div>
             </div>
-            
             <!-- Upcoming Events -->
-            <div class="new-users">
+            <section class="dashboard-section">
                 <h2>Upcoming Events</h2>
-                <div class="user-list">
-                    <div class="user">
+                <div class="dashboard-events">
+                    <div class="event-card">
                         <img src="../../img/Unit.jpg" alt="Event">
-                        <h3>PT Test</h3>
-                        <p>May 20</p>
+                        <div>
+                            <h4>PT Test</h4>
+                            <p>May 20</p>
+                        </div>
                     </div>
-                    <div class="user">
+                    <div class="event-card">
                         <img src="../../img/Unit.jpg" alt="Event">
-                        <h3>Leadership Lab</h3>
-                        <p>May 22</p>
+                        <div>
+                            <h4>Leadership Lab</h4>
+                            <p>May 22</p>
+                        </div>
                     </div>
-                    <div class="user">
+                    <div class="event-card">
                         <img src="../../img/Unit.jpg" alt="Event">
-                        <h3>Drill Practice</h3>
-                        <p>May 25</p>
+                        <div>
+                            <h4>Drill Practice</h4>
+                            <p>May 25</p>
+                        </div>
                     </div>
-                    <div class="user">
+                    <div class="event-card">
                         <img src="../../img/Unit.jpg" alt="Event">
-                        <h3>Uniform Inspection</h3>
-                        <p>May 28</p>
+                        <div>
+                            <h4>Uniform Inspection</h4>
+                            <p>May 28</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Recent Orders/Tasks Table -->
-            <div id="schedule" class="recent-orders">
+            </section>
+            <!-- Recent Tasks Table -->
+            <section class="dashboard-section">
                 <h2>Recent Tasks</h2>
-                    <table>
+                <div class="dashboard-table-wrapper">
+                    <table class="dashboard-table">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -184,8 +164,163 @@
                             </tr>
                         </tbody>
                     </table>
-                <a href="#">Show All</a>
-            </div>
+                    <a href="#" class="dashboard-link">Show All</a>
+                </div>
+            </section>
+
+            <!-- Schedule Section -->
+            <section id="schedule" class="dashboard-section">
+                <h2>Schedule</h2>
+                <ul class="schedule-list">
+                    <li>
+                        <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
+                    </li>
+                    <li>
+                        <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00, Lecture Hall A
+                    </li>
+                    <li>
+                        <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill Field
+                    </li>
+                    <li>
+                        <strong>May 28, 2025:</strong> Uniform Inspection – 09:00-11:00, HQ
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resource" class="dashboard-section">
+                <h2>Resources</h2>
+                <ul class="resource-list">
+                    <li>
+                        <a href="../../docs/Training_Manual.pdf" target="_blank">
+                            <span class="material-icons-sharp">picture_as_pdf</span>
+                            Training Manual (PDF)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../docs/Drill_Guide.docx" target="_blank">
+                            <span class="material-icons-sharp">description</span>
+                            Drill Guide (Word)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../docs/Uniform_Standards.pdf" target="_blank">
+                            <span class="material-icons-sharp">picture_as_pdf</span>
+                            Uniform Standards (PDF)
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Updates/Announcements Section -->
+            <section id="announcements" class="dashboard-section">
+                <h2>Updates</h2>
+                <ul class="updates-list">
+                    <li>
+                        <span class="material-icons-sharp">campaign</span>
+                        <strong>May 18:</strong> Parade uniform inspection moved to May 28.
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">campaign</span>
+                        <strong>May 15:</strong> New training materials uploaded in Resources.
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">campaign</span>
+                        <strong>May 10:</strong> Congratulations to Cadet Santos for top PT score!
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="uploads" class="dashboard-section">
+                <h2>Upload</h2>
+                <form class="upload-form">
+                    <label for="upload-file">Select file to upload:</label>
+                    <input type="file" id="upload-file" name="upload-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png">
+                    <button type="submit" class="dashboard-link">Upload</button>
+                </form>
+                <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
+            </section>
+
+            <!-- Search Section -->
+            <section id="search" class="dashboard-section">
+                <h2>Search</h2>
+                <form class="search-form">
+                    <input type="text" placeholder="Search cadets, instructors, or resources..." />
+                    <button type="submit" class="dashboard-link">Search</button>
+                </form>
+                <div class="search-results">
+                    <!-- Example search result -->
+                    <ul>
+                        <li>
+                            <span class="material-icons-sharp">person</span>
+                            Cadet Maria Santos – 2nd Year, Marine Option
+                        </li>
+                        <li>
+                            <span class="material-icons-sharp">folder</span>
+                            Training Manual (PDF)
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="dashboard-section">
+                <h2>Reports</h2>
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Cadet</th>
+                            <th>Attendance</th>
+                            <th>PT Score</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maria Santos</td>
+                            <td>98%</td>
+                            <td>92</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>Juan Dela Cruz</td>
+                            <td>95%</td>
+                            <td>88</td>
+                            <td>Good</td>
+                        </tr>
+                        <tr>
+                            <td>Jose Rizal</td>
+                            <td>100%</td>
+                            <td>95</td>
+                            <td>Outstanding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="tools" class="dashboard-section">
+                <h2>Admin</h2>
+                <ul class="admin-tools-list">
+                    <li>
+                        <span class="material-icons-sharp">person_add</span>
+                        <a href="#">Add New Cadet</a>
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">edit</span>
+                        <a href="#">Edit Instructor Profiles</a>
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">settings</span>
+                        <a href="#">System Settings</a>
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">backup</span>
+                        <a href="#">Backup Data</a>
+                    </li>
+                </ul>
+            </section>
         </main>
         
         <!-- Right Section for Profile and Reminders -->
@@ -193,11 +328,111 @@
             <!-- Profile Card -->
             <div class="profile-section">
                 <img src="../../img/Unit.jpg" alt="Profile Picture">
-                <h2 id="welcome-message">Cadet Johnson</h2>
+                <h2><p id="welcome-message">Instructor</p></h2>
                 <p>3rd Year Midshipman</p>
                 <p>Marine Option</p>
             </div>
-        
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <h2>Reservist Information</h2>
+                <button id="edit-profile-btn" class="dashboard-link" type="button" style="margin-bottom:1rem; cursor:pointer;">Edit</button>
+                <div class="profile-table-wrapper">
+                    <form id="profile-form">
+                        <table class="profile-table">
+                            <tr>
+                                <th>Personnel Classification</th>
+                                <td><input type="text" name="classification" value="Ready Reserve" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Rank</th>
+                                <td><input type="text" name="rank" value="LTJG" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td><input type="text" name="firstName" value="Juan" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Middle Name</th>
+                                <td><input type="text" name="middleName" value="Dela Cruz" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td><input type="text" name="lastName" value="Santos" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Ext</th>
+                                <td><input type="text" name="ext" value="Jr." disabled></td>
+                            </tr>
+                            <tr>
+                                <th>AFPSN</th>
+                                <td><input type="text" name="afpsn" value="123456789" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>BOS</th>
+                                <td><input type="text" name="bos" value="NAVY" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Classification</th>
+                                <td><input type="text" name="class" value="Officer" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Mob Cen</th>
+                                <td><input type="text" name="mobcen" value="Manila" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Source of Commission</th>
+                                <td><input type="text" name="source" value="ROTC" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Commission Category</th>
+                                <td><input type="text" name="commissionCategory" value="Regular" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthday</th>
+                                <td><input type="date" name="birthday" value="1990-01-01" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthplace</th>
+                                <td><input type="text" name="birthplace" value="Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Sex</th>
+                                <td><input type="text" name="sex" value="Male" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Civil Status</th>
+                                <td><input type="text" name="civilStatus" value="Single" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Height (cm)</th>
+                                <td><input type="number" name="height" value="170" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Weight (kg)</th>
+                                <td><input type="number" name="weight" value="65" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><input type="email" name="email" value="juan.santos@email.com" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Primary CP No.</th>
+                                <td><input type="text" name="cp" value="09171234567" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Present Address</th>
+                                <td><input type="text" name="presentAddress" value="123 Main St, Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Permanent Address</th>
+                                <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
+                            </tr>
+                        </table>
+                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;margin-top:1rem;">Save</button>
+                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;margin-top:1rem;">Cancel</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -259,7 +494,87 @@
             alert('Logging out...');
             window.location.href = '../../index.html';
         }
+
+        // filepath: c:\Users\johnm\Downloads\project\web\portals\dashBoard\instructor-dashboard.html
+        const editBtn = document.getElementById('edit-profile-btn');
+        const saveBtn = document.getElementById('save-profile-btn');
+        const cancelBtn = document.getElementById('cancel-profile-btn');
+        const form = document.getElementById('profile-form');
+        const inputs = form.querySelectorAll('input');
+
+        let originalValues = {};
+
+        editBtn.addEventListener('click', () => {
+            inputs.forEach(input => {
+                originalValues[input.name] = input.value;
+                input.disabled = false;
+            });
+            saveBtn.style.display = '';
+            cancelBtn.style.display = '';
+            editBtn.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            inputs.forEach(input => {
+                input.value = originalValues[input.name];
+                input.disabled = true;
+            });
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            editBtn.style.display = '';
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            inputs.forEach(input => input.disabled = true);
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            editBtn.style.display = '';
+            // You can add AJAX here to save the data to your backend if needed
+            alert('Profile updated!');
+        });
     </script>
     <script src="../../js/logged-in.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Profile Edit/Save/Cancel Logic
+            const editBtn = document.getElementById('edit-profile-btn');
+            const saveBtn = document.getElementById('save-profile-btn');
+            const cancelBtn = document.getElementById('cancel-profile-btn');
+            const form = document.getElementById('profile-form');
+            const inputs = form.querySelectorAll('input');
+
+            let originalValues = {};
+
+            editBtn.addEventListener('click', () => {
+                inputs.forEach(input => {
+                    originalValues[input.name] = input.value;
+                    input.disabled = false;
+                });
+                saveBtn.style.display = '';
+                cancelBtn.style.display = '';
+                editBtn.style.display = 'none';
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                inputs.forEach(input => {
+                    input.value = originalValues[input.name];
+                    input.disabled = true;
+                });
+                saveBtn.style.display = 'none';
+                cancelBtn.style.display = 'none';
+                editBtn.style.display = '';
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                inputs.forEach(input => input.disabled = true);
+                saveBtn.style.display = 'none';
+                cancelBtn.style.display = 'none';
+                editBtn.style.display = '';
+                alert('Profile updated!');
+            });
+        });
+    </script>
 </body>
 </html>

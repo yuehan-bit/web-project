@@ -4,51 +4,246 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadet Dashboard - NROTC</title>
-    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/dashboard1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="../../img/Unit.jpg" alt="ROTC Logo">
-            <a href="../../index.html" class="school-name" text-decoration="none">PLV Naval Reserve Officers' Training Corps</a>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="../../index.html">Home</a></li>
-                <li><a href="../../programs/program-info.html">Programs</a></li>
-                <li><a href="../../contact.html">Contact Us</a></li>
-                <li><a href="../../about/about.html">About</a></li>
-				<li class="logo dropdown">
-                    <div class="logo-container">
-                        <img src="../../img/Unit.jpg" alt="ROTC Logo" class="logo-toggle">
+    <div class="container">
+        <!-- Sidebar -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="../../img/Unit.jpg" alt="ROTC Logo">
+                    <h2>PLV NROTC</h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="../../index.html">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Home</h3>
+                </a>
+                <a href="#profile" class="active">
+                    <span class="material-icons-sharp">person</span>
+                    <h3>Profile</h3>
+                </a>
+                <a href="#schedule">
+                    <span class="material-icons-sharp">calendar_today</span>
+                    <h3>Schedule</h3>
+                </a>
+                <a href="#resource">
+                    <span class="material-icons-sharp">folder</span>
+                    <h3>Resources</h3>
+                </a>
+                <a href="#announcements">
+                    <span class="material-icons-sharp">notifications</span>
+                    <h3>Updates</h3>
+                </a>
+                <a onclick="logout()">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Sign Out</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main>
+            <h1>Cadet Dashboard</h1>
+            <div class="dashboard-welcome card">
+                <h2>Welcome, <span id="cadet-name">Cadet</span>!</h2>
+                <p>Manage your schedule and resources efficiently.</p>
+            </div>
+            <!-- Top Stats Cards -->
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">schedule</span>
+                    <h3>Training Hours</h3>
+                    <p class="card-value">28.0</p>
+                    <p class="card-desc">Total hours this month</p>
+                </div>
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">star</span>
+                    <h3>Performance Score</h3>
+                    <p class="card-value">85</p>
+                    <p class="card-desc">Your current score</p>
+                </div>
+                <div class="dashboard-card">
+                    <span class="material-icons-sharp card-icon">fitness_center</span>
+                    <h3>Physical Fitness</h3>
+                    <p class="card-value">210</p>
+                    <p class="card-desc">Fitness points</p>
+                </div>
+            </div>
+            <!-- Upcoming Events -->
+            <section class="dashboard-section">
+                <h2>Upcoming Events</h2>
+                <div class="dashboard-events">
+                    <div class="event-card">
+                        <img src="../../img/Unit.jpg" alt="Event">
+                        <div>
+                            <h4>PT Test</h4>
+                            <p>May 20</p>
+                        </div>
                     </div>
-                    <ul class="dropdown-sidebar">
-                        <li><a href="profile/profile.html">Profile</a></li>
-                        <li><a href="training-schedule/training-schedule.html">Training Schedule</a></li>
-                        <li><a href="resources/resources.html">Resources</a></li>
-                        <li><a href="announcements/updates.html">Updates</a></li>
-                        <li><a onclick="logout()">Sign out</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-		
-    </header>
-
-    <div class="dashboard-container">
-        <!-- Main Content Section -->
-        <main class="dashboard-main">
-            <section class="dashboard-hero">
-                <h1>Welcome to your Cadet Dashboard</h1>
-                <p id="welcome-message" class="welcome-message">Welcome, Cadet!</p>
+                    <div class="event-card">
+                        <img src="../../img/Unit.jpg" alt="Event">
+                        <div>
+                            <h4>Leadership Lab</h4>
+                            <p>May 22</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img src="../../img/Unit.jpg" alt="Event">
+                        <div>
+                            <h4>Drill Practice</h4>
+                            <p>May 25</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Recent Tasks Table -->
+            <section class="dashboard-section">
+                <h2>Recent Tasks</h2>
+                <div class="dashboard-table-wrapper">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>5/3/25</td>
+                                <td>06:00 - 08:00</td>
+                                <td>Physical Training</td>
+                                <td>Parade Grounds</td>
+                            </tr>
+                            <tr>
+                                <td>5/10/25</td>
+                                <td>14:00 - 16:00</td>
+                                <td>Naval Tactics Lecture</td>
+                                <td>Lecture Hall A</td>
+                            </tr>
+                            <tr>
+                                <td>5/17/25</td>
+                                <td>08:00 - 10:00</td>
+                                <td>Drills and Ceremonies</td>
+                                <td>Drill Field</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="dashboard-link">Show All</a>
+                </div>
+            </section>
+            <!-- Schedule Section -->
+            <section id="schedule" class="dashboard-section">
+                <h2>Schedule</h2>
+                <ul class="schedule-list">
+                    <li>
+                        <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
+                    </li>
+                    <li>
+                        <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00, Lecture Hall A
+                    </li>
+                    <li>
+                        <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill Field
+                    </li>
+                </ul>
+            </section>
+            <!-- Resources Section -->
+            <section id="resource" class="dashboard-section">
+                <h2>Resources</h2>
+                <ul class="resource-list">
+                    <li>
+                        <a href="../../docs/Training_Manual.pdf" target="_blank">
+                            <span class="material-icons-sharp">picture_as_pdf</span>
+                            Training Manual (PDF)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../docs/Drill_Guide.docx" target="_blank">
+                            <span class="material-icons-sharp">description</span>
+                            Drill Guide (Word)
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- Updates/Announcements Section -->
+            <section id="announcements" class="dashboard-section">
+                <h2>Updates</h2>
+                <ul class="updates-list">
+                    <li>
+                        <span class="material-icons-sharp">campaign</span>
+                        <strong>May 18:</strong> Parade uniform inspection moved to May 28.
+                    </li>
+                    <li>
+                        <span class="material-icons-sharp">campaign</span>
+                        <strong>May 15:</strong> New training materials uploaded in Resources.
+                    </li>
+                </ul>
             </section>
         </main>
+        <!-- Right Section for Profile Card -->
+        <div class="right-section">
+            <div class="profile-section">
+                <img src="../../img/default-profile.png" alt="Profile Picture">
+                <h2><span id="welcome-message">Cadet</span></h2>
+                <p>2nd Year Cadet</p>
+                <p>Marine Option</p>
+            </div>
+        </div>
     </div>
-
-    <footer>
-        <p>&copy; 2025 PLV-NROTC Organization. All Rights Reserved.</p>
-    </footer>
-
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-navbar">
+        <a href="../../index.html" class="active">
+            <span class="material-icons-sharp">home</span>
+        </a>
+        <a href="#profile">
+            <span class="material-icons-sharp">person</span>
+        </a>
+        <a href="#schedule">
+            <span class="material-icons-sharp">calendar_today</span>
+        </a>
+        <a href="#resource">
+            <span class="material-icons-sharp">folder</span>
+        </a>
+        <a href="#announcements">
+            <span class="material-icons-sharp">notifications</span>
+        </a>
+    </nav>
+    <script>
+        // Sidebar mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const sidebar = document.querySelector('aside');
+        if(menuBtn && sidebar) {
+            menuBtn.addEventListener('click', () => {
+                sidebar.style.display = 'block';
+            });
+        }
+        if(closeBtn && sidebar) {
+            closeBtn.addEventListener('click', () => {
+                sidebar.style.display = 'none';
+            });
+        }
+        // Logout Function
+        function logout() {
+            alert('Logging out...');
+            window.location.href = '../../index.html';
+        }
+        // Welcome message personalization
+        document.addEventListener('DOMContentLoaded', function() {
+            const cadetName = sessionStorage.getItem("username") || "Cadet";
+            document.getElementById('cadet-name').textContent = cadetName;
+            document.getElementById('welcome-message').textContent = cadetName;
+        });
+    </script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>
 </body>

@@ -24,6 +24,16 @@ app.post('/api/signup', (req, res) => {
   });
 });
 
+app.get('/api/signups', (req, res) => {
+  const logPath = path.join(__dirname, 'signups.log');
+  fs.readFile(logPath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(404).send('No signups found.');
+    }
+    res.type('text/plain').send(data);
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

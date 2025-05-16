@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROTC Organization</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+		<div class="logo">
+			<a href="index.html"><img src="img/Unit.jpg" alt="ROTC Logo"></a>
+			<a href="index.html" class="school-name">PLV Naval Reserve Officers' Training Corps</a>
+		</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+				<li><a href="programs/program-info.html">Programs</a></li>
+				<li><a href="contact/contact.html">Contact Us</a></li>
+				<li><a href="about/about.html">About</a></li>
+			</ul>
+		</nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <img src="img/Unit.jpg" alt="ROTC Emblem" class="hero-logo">
+            <h1>Welcome to PLV-NROTC</h1>
+            <p>Empowering Future Leaders</p>
+            <a href="portals/portal.html" class="btn">Log In / Register</a><br><br>
+
+        </div>
+    </section>
+    
+
+    <footer>
+        <p>&copy; 2025 PLV-NROTC. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('mobile-active');
+    }
+    </script>
+
+</body>
+</html>

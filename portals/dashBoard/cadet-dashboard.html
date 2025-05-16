@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadet Dashboard - NROTC</title>
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../../img/Unit.jpg" alt="ROTC Logo">
+            <a href="../../index.html" class="school-name" text-decoration="none">PLV Naval Reserve Officers' Training Corps</a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../programs/program-info.html">Programs</a></li>
+                <li><a href="../../contact.html">Contact Us</a></li>
+                <li><a href="../../about/about.html">About</a></li>
+				<li class="logo dropdown">
+                    <div class="logo-container">
+                        <img src="../../img/Unit.jpg" alt="ROTC Logo" class="logo-toggle">
+                    </div>
+                    <ul class="dropdown-sidebar">
+                        <li><a href="profile/profile.html">Profile</a></li>
+                        <li><a href="training-schedule/training-schedule.html">Training Schedule</a></li>
+                        <li><a href="resources/resources.html">Resources</a></li>
+                        <li><a href="announcements/updates.html">Updates</a></li>
+                        <li><a onclick="logout()">Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+		
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Main Content Section -->
+        <main class="dashboard-main">
+            <section class="dashboard-hero">
+                <h1>Welcome to your Cadet Dashboard</h1>
+                <p id="welcome-message" class="welcome-message">Welcome, Cadet!</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PLV-NROTC Organization. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../../js/dashboard.js"></script>
+    <script src="../../js/logged-in.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadets Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+      /* Portal-specific improvements */
+      .portal-hero {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('../img/Cover.jpg') no-repeat center center/cover;
+        padding: 2rem 0;
+      }
+      #form-content {
+        background: rgba(255,255,255,0.97); /* Slight transparency for better blend */
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        padding: 1.5rem 1rem;
+        max-width: 340px;
+        width: 100%;
+        margin: 0 auto;
+        min-height: unset;
+      }
+      .flip-container {
+        perspective: 1000px;
+      }
+      .flipper {
+        transition: 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+        min-height: 350px;
+      }
+      .front, .back {
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0; left: 0; width: 100%; min-height: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: transparent; /* Remove white background */
+        border-radius: 16px;
+        box-shadow: none;
+      }
+      .front { z-index: 2; }
+      .back { transform: rotateY(180deg); }
+      .flip { transform: rotateY(180deg); }
+      .title {
+        font-size: 1.5rem;
+        color: #1e3c72;
+        margin-bottom: 1rem;
+      }
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        align-items: stretch;
+      }
+      label {
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+        color: #1e3c72;
+        text-align: left;
+        font-size: 0.97rem;
+      }
+      input, select {
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #b0b0b0;
+        font-size: 0.97rem;
+        outline: none;
+        transition: border 0.2s;
+      }
+      input:focus, select:focus {
+        border: 1.5px solid #1e3c72;
+        background: #f0f6ff;
+      }
+      .error {
+        color: #d32f2f;
+        font-size: 0.92rem;
+        min-height: 1.2em;
+        margin-bottom: 0.2rem;
+        text-align: left;
+      }
+      .flipbutton {
+        margin-top: 1rem;
+        color: #FF9E4F;
+        font-weight: 600;
+        text-decoration: underline;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 0.97rem;
+        transition: color 0.2s;
+        display: inline-block;
+      }
+      .flipbutton:hover {
+        color: #0a2239;
+      }
+      .portal-btn, #login-button, input[type="submit"] {
+        background: #1e3c72;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.7rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: -1rem;   /* Reduced from 0.7rem or 0.5rem */
+        margin-bottom: 0;     /* Remove extra space below */
+        align-self: stretch;  /* Make button fill the form width */
+      }
+      #signup-button{
+        background: #1e3c72;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.7rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 1rem;   /* Reduced from 0.7rem or 0.5rem */
+        margin-bottom: 0;     /* Remove extra space below */
+        align-self: stretch;  /* Make button fill the form width */
+      }
+      .portal-btn:disabled, #login-button:disabled, #signup-button:disabled, input[type="submit"]:disabled {
+        background: #b0b0b0;
+        cursor: not-allowed;
+      }
+      .portal-btn:hover:enabled, #login-button:hover:enabled, #signup-button:hover:enabled, input[type="submit"]:hover:enabled {
+        background: #0a2239;
+      }
+      .loading-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(30,60,114,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      .loading-overlay.hidden {
+        display: none;
+      }
+      .spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #1e3c72;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+      }
+      @media (max-width: 500px) {
+        #form-content {
+          padding: 1rem 0.3rem;
+          max-width: 98vw;
+        }
+        .title {
+          font-size: 1.1rem;
+        }
+        .front, .back { min-height: 370px; }
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="../index.html"><img src="../img/Unit.jpg" alt="ROTC Logo" style="height:40px;"></a>
+            <a href="../index.html" class="school-name">PLV Naval Reserve Officers' Training Corps</a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../programs/program-info.html">Programs</a></li>
+                <li><a href="../contact/contact.html">Contact Us</a></li>
+                <li><a href="../about/about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+      <section class="portal-hero">
+        <div id="form-content">
+          <div class="flip-container">
+            <div class="flipper" id="flipper">
+              <!-- Login Form -->
+              <div class="front">
+                <h1 class="title">Login</h1>
+                <form name="login" onsubmit="handleLogin(event);">
+                    <label for="userType">User Type</label>
+                    <select name="userType" id="userType" required>
+                        <option value="cadet">Cadet</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="officer">Officer</option>
+                    </select>
+                  <label for="login-username">Username</label>
+                  <input type="text" name="username" id="login-username" placeholder="Username" required autocomplete="username" />
+                  <label for="login-password">Password</label>
+                  <input type="password" name="password" id="login-password" placeholder="Password" required autocomplete="current-password" />
+                  <div class="error" id="login-error" aria-live="polite"></div>
+                  
+                  <input type="submit" value="Login" class="portal-btn" />
+                </form>
+                <button class="flipbutton" id="showRegister" type="button">Register →</button>
+              </div>
+              <!-- Register Form -->
+              <div class="back">
+                <h1 class="title">Register</h1>
+                <form name="signup" onsubmit="signupValidation(event, 'user');">
+                  <label for="signup-school-id">School ID</label>
+                  <input type="text" name="school-id" id="signup-school-id" placeholder="School ID" required autocomplete="off" />
+                  <label for="signup-full-name">Full Name</label>
+                  <input type="text" name="full-name" id="signup-full-name" placeholder="SURNAME, FIRSTNAME MIDDLENAME" required autocomplete="name" />
+                  <label for="signup-course-year-section">Course Year-Section</label>
+                  <input type="text" name="course-year-section" id="signup-course-year-section" placeholder="Course Year-Section" required autocomplete="off" />
+                  <input type="submit" value="Sign Up" id="signup-button" class="portal-btn" />
+                </form>
+                <button class="flipbutton" id="showLogin" type="button">Login to my account →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Loading Spinner -->
+        <div id="loading-overlay" class="loading-overlay hidden" aria-live="polite">
+            <div class="spinner"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 PLV-NROTC Organization. All Rights Reserved.</p>
+    </footer>
+
+    <script src="../js/login.js"></script>
+    <script src="../js/register.js"></script>
+    <script>
+      // Flip logic for login/register
+      const flipper = document.getElementById('flipper');
+      document.getElementById('showRegister').onclick = () => flipper.classList.add('flip');
+      document.getElementById('showLogin').onclick = () => flipper.classList.remove('flip');
+    </script>
+</body>
+</html>

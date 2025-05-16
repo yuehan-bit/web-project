@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programs - PLV-NROTC</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../img/PLV.jpg" alt="ROTC Logo">
+			<span class="school-name">Pamantasan ng Lungsod ng Valenzuela</span>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+				<li><a href="program-info.html">Programs</a></li>
+				<li><a href="../contact/contact.html">Contact Us</a></li>
+				<li><a href="../about/about.html">About</a></li>
+                <li><a href="../portals/portal.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Programs</h1>
+            <p>Explore the various programs offered by PLV-NROTC to develop leadership and military skills.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 PLV-NROTC. All Rights Reserved.</p>
+    </footer>
+    <script>
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('mobile-active');
+    }
+    </script>
+</body>
+</html>

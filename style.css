@@ -32,7 +32,7 @@ body{
   border-radius: 10px;
   margin-left: 20px;
   font-size: 30px;
-  box-shadow: 4px 10px rgb(128, 30, 13);
+  /* box-shadow: 4px 10px rgb(128, 30, 13); */
   display: flex;
   align-items: center;
   gap: 10px;

@@ -26,6 +26,11 @@ db.run(`CREATE TABLE IF NOT EXISTS signups (
   birthday TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )`);
+db.run(`CREATE TABLE IF NOT EXISTS profiles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  data TEXT NOT NULL
+)`);
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -163,6 +168,29 @@ app.get('/api/contact/messages', (req, res) => {
     }
     res.json(rows);
   });
+});
+
+// Get profile for a user
+app.get('/api/profile/:username', (req, res) => {
+  db.get('SELECT data FROM profiles WHERE username = ?', [req.params.username], (err, row) => {
+    if (err) return res.status(500).json({ message: 'Database error.' });
+    if (!row) return res.json(null);
+    res.json(JSON.parse(row.data));
+  });
+});
+
+// Save/update profile for a user
+app.post('/api/profile/:username', (req, res) => {
+  const data = JSON.stringify(req.body);
+  db.run(
+    `INSERT INTO profiles (username, data) VALUES (?, ?)
+     ON CONFLICT(username) DO UPDATE SET data=excluded.data`,
+    [req.params.username, data],
+    function (err) {
+      if (err) return res.status(500).json({ message: 'Database error.' });
+      res.json({ message: 'Profile saved!' });
+    }
+  );
 });
 
 // Protected clear signups endpoint (for development/testing only)

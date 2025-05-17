@@ -32,7 +32,8 @@ function handleLogin(event) {
             { username: "12345", password: "12345", name: "Officer Jane" },
             { username: "off7890", password: "command1", name: "Officer Martinez" },
             { username: "cdr2468", password: "officer23", name: "Commander Johnson" },
-            { username: "ltc1357", password: "usnavy25", name: "Lieutenant Clark" }
+            { username: "ltc1357", password: "usnavy25", name: "Lieutenant Clark" },
+            { username: "ltjg2468", password: "", name: "Officer Tan" }
         ]
     };
 
@@ -40,7 +41,7 @@ function handleLogin(event) {
     const user = mockDatabase[userType]?.find(user => user.username === username && user.password === password);
 
     if (user) {
-        sessionStorage.setItem("username", user.name);
+        sessionStorage.setItem("username", user.username); // <-- use username, not name
         sessionStorage.setItem("userType", userType);
 
         const loadingOverlay = document.getElementById('loading-overlay');

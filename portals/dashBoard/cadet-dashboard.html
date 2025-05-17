@@ -224,9 +224,10 @@
                   </div>
                 </div>
 
-                <button id="edit-profile-btn" class="dashboard-link" type="button" style="margin-bottom:1rem; cursor:pointer;">Edit</button>
+                <button id="edit-profile-btn" class="dashboard-link" type="button">Edit</button>
                 <div class="profile-table-wrapper">
                     <form id="profile-form">
+                        <input type="hidden" name="profilePic" id="profile-pic-input-hidden">
                         <table class="profile-table">
                             <tr>
                                 <th>Personnel Classification</th>
@@ -317,8 +318,14 @@
                                 <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
                             </tr>
                         </table>                        </table>
-                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;margin-top:1rem;">Save</button>
-                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;margin-top:1rem;">Cancel</button>
+                        <div style="margin-top:1rem; text-align:center;">
+                            <button id="save-profile-btn" class="dashboard-link save-btn" type="submit" style="display:none;">
+                                <span class="material-icons-sharp" style="vertical-align:middle;">save</span> Save
+                            </button>
+                            <button id="cancel-profile-btn" class="dashboard-link cancel-btn" type="button" style="display:none;">
+                                <span class="material-icons-sharp" style="vertical-align:middle;">cancel</span> Cancel
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -362,12 +369,12 @@
             alert('Logging out...');
             window.location.href = '../../index.html';
         }
-        // Welcome message personalization
+        /* // Welcome message personalization
         document.addEventListener('DOMContentLoaded', function() {
             const cadetName = sessionStorage.getItem("username") || "Cadet";
-            document.getElementById('cadet-name').textContent = cadetName;/* 
-            document.getElementById('welcome-message').textContent = cadetName; */
-        });
+            document.getElementById('cadet-name').textContent = cadetName;
+            document.getElementById('welcome-message').textContent = cadetName;
+        }); */
         async function loadResources() {
             const res = await fetch('/api/resources');
             const files = await res.json();
@@ -430,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editBtn.style.display = '';
     };
 
-    form.onsubmit = function(e) {
+    /* form.onsubmit = function(e) {
         e.preventDefault();
         // Here you can add AJAX to save to backend if needed
         inputs.forEach(input => input.disabled = true);
@@ -438,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelBtn.style.display = 'none';
         editBtn.style.display = '';
         alert('Profile saved!');
-    };
+    }; */
 });
 </script>
     <script>
@@ -475,7 +482,9 @@ cropBtn.onclick = function() {
             height: 200,
             imageSmoothingQuality: 'high'
         });
-        picImg.src = canvas.toDataURL();
+        const dataUrl = canvas.toDataURL();
+        picImg.src = dataUrl;
+        document.getElementById('profile-pic-hidden').value = dataUrl; // Save to hidden input
         cropper.destroy();
         cropperModal.style.display = 'none';
         picInput.value = ""; // reset input
@@ -542,5 +551,70 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>
+    <script>
+const username = sessionStorage.getItem("username");
+const form = document.getElementById('profile-form');
+const inputs = form.querySelectorAll('input');
+const editBtn = document.getElementById('edit-profile-btn');
+const saveBtn = document.getElementById('save-profile-btn');
+const cancelBtn = document.getElementById('cancel-profile-btn');
+let originalValues = {};
+
+// Load profile data
+async function loadProfile() {
+  const res = await fetch(`/api/profile/${username}`);
+  const data = await res.json();
+  if (data) {
+    for (const [key, value] of Object.entries(data)) {
+      const input = form.querySelector(`[name="${key}"]`);
+      if (input) input.value = value;
+    }
+  }
+  // Disable all fields by default
+  inputs.forEach(input => input.disabled = true);
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+}
+document.addEventListener('DOMContentLoaded', loadProfile);
+
+editBtn.onclick = function() {
+  inputs.forEach(input => {
+    originalValues[input.name] = input.value;
+    input.disabled = false;
+  });
+  saveBtn.style.display = '';
+  cancelBtn.style.display = '';
+  editBtn.style.display = 'none';
+};
+
+cancelBtn.onclick = function() {
+  inputs.forEach(input => {
+    input.value = originalValues[input.name];
+    input.disabled = true;
+  });
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+};
+
+form.onsubmit = async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = {};
+  formData.forEach((value, key) => data[key] = value);
+  await fetch(`/api/profile/${username}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  alert('Profile updated!');
+  // After saving, disable fields and toggle buttons
+  inputs.forEach(input => input.disabled = true);
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+};
+</script>
 </body>
 </html>

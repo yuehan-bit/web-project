@@ -251,7 +251,7 @@
             <!-- Profile Section -->
             <div class="profile-section">
                 <h2>Reservist Information</h2>
-                <button id="edit-profile-btn" class="dashboard-link" type="button" style="margin-bottom:1rem; cursor:pointer;">Edit</button>
+                <button id="edit-profile-btn" class="dashboard-link" type="button">Edit</button>
                 <div class="profile-table-wrapper">
                     <form id="profile-form">
                         <table class="profile-table">
@@ -344,8 +344,8 @@
                                 <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
                             </tr>
                         </table>
-                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;margin-top:1rem;">Save</button>
-                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;margin-top:1rem;">Cancel</button>
+                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;">Save</button>
+                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -595,6 +595,71 @@ async function loadContactMessages() {
   }
 }
 document.addEventListener('DOMContentLoaded', loadContactMessages);
+</script>
+<script>
+const username = sessionStorage.getItem("username");
+const form = document.getElementById('profile-form');
+const inputs = form.querySelectorAll('input');
+const editBtn = document.getElementById('edit-profile-btn');
+const saveBtn = document.getElementById('save-profile-btn');
+const cancelBtn = document.getElementById('cancel-profile-btn');
+let originalValues = {};
+
+// Load profile data
+async function loadProfile() {
+  const res = await fetch(`/api/profile/${username}`);
+  const data = await res.json();
+  if (data) {
+    for (const [key, value] of Object.entries(data)) {
+      const input = form.querySelector(`[name="${key}"]`);
+      if (input) input.value = value;
+    }
+  }
+  // Disable all fields by default
+  inputs.forEach(input => input.disabled = true);
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+}
+document.addEventListener('DOMContentLoaded', loadProfile);
+
+editBtn.onclick = function() {
+  inputs.forEach(input => {
+    originalValues[input.name] = input.value;
+    input.disabled = false;
+  });
+  saveBtn.style.display = '';
+  cancelBtn.style.display = '';
+  editBtn.style.display = 'none';
+};
+
+cancelBtn.onclick = function() {
+  inputs.forEach(input => {
+    input.value = originalValues[input.name];
+    input.disabled = true;
+  });
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+};
+
+form.onsubmit = async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = {};
+  formData.forEach((value, key) => data[key] = value);
+  await fetch(`/api/profile/${username}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  alert('Profile updated!');
+  // After saving, disable fields and toggle buttons
+  inputs.forEach(input => input.disabled = true);
+  saveBtn.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  editBtn.style.display = '';
+};
 </script>
 </body>
 </html>

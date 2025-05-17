@@ -43,7 +43,6 @@ function handleLogin(event) {
     if (user) {
         // Save the user's name and userType in sessionStorage for personalization and role management
         sessionStorage.setItem("username", user.name);
-        sessionStorage.setItem("username", user.name);
         sessionStorage.setItem("userType", userType);
 
         // Show loading spinner
@@ -52,7 +51,7 @@ function handleLogin(event) {
 
         // Simulate loading time before redirecting
         setTimeout(() => {
-            window.location.href = `dashboard/${userType}-dashboard.html`; // Redirect based on user type
+            window.location.href = `dashBoard/${userType}-dashboard.html`; // Redirect based on user type
         }, 1500); // 1.5 seconds delay for loading spinner
     } else {
         // If user credentials don't match, show an error message

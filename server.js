@@ -113,7 +113,7 @@ app.post('/api/delete-resource', (req, res) => {
 app.post('/api/clear-signups', (req, res) => {
   // Simple protection: require a secret token in the request header
   const adminToken = req.headers['x-admin-token'];
-  const SECRET = process.env.ADMIN_CLEAR_TOKEN || 'changeme123'; // Set this in Railway environment variables
+  const SECRET = process.env.ADMIN_CLEAR_TOKEN || 'yuehanadminlangmalakas'; // Set this in Railway environment variables
 
   if (adminToken !== SECRET) {
     return res.status(403).json({ message: 'Forbidden: Invalid admin token.' });

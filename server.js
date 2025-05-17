@@ -4,8 +4,14 @@ const db = require('./db');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Railway sets this automatically
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+});
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -129,20 +135,31 @@ app.post('/api/delete-resource', (req, res) => {
     });
 });
 
-app.post('/api/contact', (req, res) => {
+app.post('/api/contact', async (req, res) => {
   const { name, course, message } = req.body;
   if (!name || !course || !message) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
-  const messages = loadMessages();
-  messages.push({ name, course, message, date: new Date().toISOString() });
-  saveMessages(messages);
-  res.json({ message: 'Message sent successfully!' });
+  try {
+    await pool.query(
+      'INSERT INTO messages (name, course, message) VALUES ($1, $2, $3)',
+      [name, course, message]
+    );
+    res.json({ message: 'Message sent successfully!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Database error.' });
+  }
 });
 
-app.get('/api/contact/messages', (req, res) => {
-  const messages = loadMessages();
-  res.json(messages);
+app.get('/api/contact/messages', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM messages ORDER BY date DESC');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Database error.' });
+  }
 });
 
 // Protected clear signups endpoint (for development/testing only)

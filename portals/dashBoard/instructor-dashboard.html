@@ -1,178 +1,184 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadet Dashboard - NROTC</title>
-    <link rel="stylesheet" href="../../css/dashboard1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+const express = require('express');
+const bodyParser = require('body-parser');
+const db = require('./db');
+const path = require('path');
+const multer = require('multer');="width=device-width, initial-scale=1.0">
+const fs = require('fs');d - NROTC</title>
+const { Pool } = require('pg');="../../css/dashboard1.css">
+const app = express();//fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+const PORT = process.env.PORT || 3000;is.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
-</head>
-<body>
-    <div class="container">
-        <!-- Sidebar -->
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Railway sets this automatically
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+});     <!-- Sidebar -->
         <aside>
-            <div class="toggle">
-                <div class="logo">
-                    <img src="../../img/Unit.jpg" alt="ROTC Logo">
+// Ensure uploads folder exists>
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);TC Logo">
                     <h2>PLV NROTC</h2>
-                </div>
-                <div class="close" id="close-btn">
+const upload = multer({ dest: uploadsDir });
+const uploadsMetaPath = path.join(__dirname, 'uploads', 'uploads.json');
                     <span class="material-icons-sharp">close</span>
-                </div>
+const messagesPath = path.join(__dirname, 'contact/messages.json');
             </div>
-
-            <div class="sidebar">
-                <a href="../../index.html">
-                    <span class="material-icons-sharp">home</span>
-                    <h3>Home</h3>
-                </a>
-                <a href="#profile">
-                    <span class="material-icons-sharp">person</span>
-                    <h3>Profile</h3>
-                </a>
+function loadMessages() {
+  try {     <div class="sidebar">
+    return JSON.parse(fs.readFileSync(messagesPath, 'utf8'));
+  } catch {         <span class="material-icons-sharp">home</span>
+    return [];      <h3>Home</h3>
+  }             </a>
+}               <a href="#profile">
+function saveMessages(messages) {material-icons-sharp">person</span>
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
+}               </a>
                 <a href="#schedule" class="active">
-                    <span class="material-icons-sharp">calendar_today</span>
-                    <h3>Schedule</h3>
+// Helper to load and save uploads metadatacons-sharp">calendar_today</span>
+function loadUploadsMeta() {dule</h3>
+  try {         </a>
+    return JSON.parse(fs.readFileSync(uploadsMetaPath, 'utf8'));
+  } catch {         <span class="material-icons-sharp">folder</span>
+    return [];      <h3>Resources</h3>
+  }             </a>
+}               <a href="#announcements">
+function saveUploadsMeta(meta) {"material-icons-sharp">notifications</span>
+  fs.writeFileSync(uploadsMetaPath, JSON.stringify(meta, null, 2));
+}                   <!-- <span class="message-count">3</span> -->
                 </a>
-                <a href="#resource">
-                    <span class="material-icons-sharp">folder</span>
-                    <h3>Resources</h3>
+app.use(bodyParser.json());ploads">
+app.use(bodyParser.urlencoded({ extended: true }));rp">upload_file</span>
+app.use(express.json());Upload</h3>
                 </a>
-                <a href="#announcements">
-                    <span class="material-icons-sharp">notifications</span>
-                    <h3>Updates</h3>
-                    <!-- <span class="message-count">3</span> -->
-                </a>
-                <a href="#uploads">
-                    <span class="material-icons-sharp">upload_file</span>
-                    <h3>Upload</h3>
-                </a>
-                <a href="#search">
-                    <span class="material-icons-sharp">search</span>
+// Serve static files (HTML, CSS, JS, images) from the parent directory
+app.use(express.static(path.join(__dirname)));s-sharp">search</span>
                     <h3>Search</h3>
-                </a>
-                <a href="#reports">
-                    <span class="material-icons-sharp">assessment</span>
+app.get('/', (req, res) => {
+  res.send('Server is running!');">
+});                 <span class="material-icons-sharp">assessment</span>
                     <h3>Reports</h3>
-                </a>
-                <a href="#tools">
-                    <span class="material-icons-sharp">admin_panel_settings</span>
-                    <h3>Admin</h3>
-                </a>
-                <a onclick="logout()">
-                    <span class="material-icons-sharp">logout</span>
-                    <h3>Sign Out</h3>
-                </a>
+// Signup endpointa>
+app.post('/api/signup', (req, res) => {
+  const { schoolId, fullName, courseYearSection, birthday } = req.body;ings</span>
+  if (!schoolId || !fullName || !courseYearSection || !birthday) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }             <a onclick="logout()">
+  db.run(           <span class="material-icons-sharp">logout</span>
+    `INSERT INTO signups (school_id, full_name, course_year_section, birthday) VALUES (?, ?, ?, ?)`,
+    [schoolId, fullName, courseYearSection, birthday],
+    function (err) {
+      if (err) {
+        console.error(err); // <--- Add this for debugging
+        return res.status(500).json({ message: 'Database error.' });
+      } <main>
+      res.status(200).json({ message: 'Signup successful!', id: this.lastID });
+    }       <div class="dashboard-welcome card">
+  );            <h2>Welcome, <span id="instructor-name">Instructor Johnson</span>!</h2>
+});             <p>Manage schedules, and resources efficiently.</p>
             </div>
-        </aside>
-        
-        <!-- Main Content -->
-        <main>
-            <h1>Instructor Dashboard</h1>
-            <div class="dashboard-welcome card">
-                <h2>Welcome, <span id="instructor-name">Instructor Johnson</span>!</h2>
-                <p>Manage schedules, and resources efficiently.</p>
-            </div>
-            <!-- Top Stats Cards -->
-            <div class="dashboard-cards">
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">schedule</span>
-                    <h3>Training Hours</h3>
-                    <p class="card-value">42.5</p>
-                    <p class="card-desc">Total hours this month</p>
+// (Optional) Endpoint to view signups
+app.get('/api/signups', (req, res) => {">
+  db.all(`SELECT * FROM signups ORDER BY created_at DESC`, [], (err, rows) => {
+    if (err) return res.status(500).json({ message: 'Database error.' });</span>
+    res.json(rows); <h3>Training Hours</h3>
+  });               <p class="card-value">42.5</p>
+});                 <p class="card-desc">Total hours this month</p>
                 </div>
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">star</span>
-                    <h3>Leadership Score</h3>
+// Upload endpoint (for instructors)d-card">
+app.post('/api/upload', upload.single('upload-file'), (req, res) => {</span>
+  if (!req.file) return res.status(400).json({ message: "Didn't upload file" });
                     <p class="card-value">92</p>
-                    <p class="card-desc">Your current score</p>
+  let meta = loadUploadsMeta();ard-desc">Your current score</p>
                 </div>
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">fitness_center</span>
+  // Remove any existing entry with the same filename or originalname
+  meta = meta.filter(f => f.filename !== req.file.filename && f.originalname !== req.file.originalname);
                     <h3>Physical Fitness</h3>
-                    <p class="card-value">245</p>
-                    <p class="card-desc">Fitness points</p>
-                </div>
-            </div>
-            <!-- Upcoming Events -->
-            <section class="dashboard-section">
-                <h2>Upcoming Events</h2>
-                <div class="dashboard-events">
-                    <div class="event-card">
+  // Add the new file entrys="card-value">245</p>
+  meta.push({       <p class="card-desc">Fitness points</p>
+    filename: req.file.filename,
+    originalname: req.file.originalname,
+    mimetype: req.file.mimetype, -->
+    size: req.file.size,ss="dashboard-section">
+    uploadedAt: new Date().toISOString()
+  });           <div class="dashboard-events">
+  saveUploadsMeta(meta); class="event-card">
                         <img src="../../img/Unit.jpg" alt="Event">
-                        <div>
-                            <h4>PT Test</h4>
+  res.json({ message: 'File uploaded successfully!', filename: req.file.filename });
+});                         <h4>PT Test</h4>
                             <p>May 20</p>
-                        </div>
-                    </div>
-                    <div class="event-card">
-                        <img src="../../img/Unit.jpg" alt="Event">
-                        <div>
+// List uploaded files (for all users)
+app.get('/api/resources', (req, res) => {
+  let meta = loadUploadsMeta();"event-card">
+  res.json(meta);       <img src="../../img/Unit.jpg" alt="Event">
+});                     <div>
                             <h4>Leadership Lab</h4>
-                            <p>May 22</p>
-                        </div>
+// Serve uploaded files     <p>May 22</p>
+app.use('/uploads', express.static(uploadsDir));
                     </div>
+app.get('/api/download/:filename', (req, res) => {
+  const meta = loadUploadsMeta();"../../img/Unit.jpg" alt="Event">
+  const fileMeta = meta.find(f => f.filename === req.params.filename);
+  if (!fileMeta) return res.status(404).send('File not found');
+  const filePath = path.join(__dirname, 'uploads', fileMeta.filename);
+  res.download(filePath, fileMeta.originalname);
+});                 </div>
                     <div class="event-card">
-                        <img src="../../img/Unit.jpg" alt="Event">
-                        <div>
-                            <h4>Drill Practice</h4>
-                            <p>May 25</p>
-                        </div>
-                    </div>
-                    <div class="event-card">
-                        <img src="../../img/Unit.jpg" alt="Event">
-                        <div>
-                            <h4>Uniform Inspection</h4>
-                            <p>May 28</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Recent Tasks Table -->
-            <section class="dashboard-section">
-                <h2>Recent Tasks</h2>
-                <div class="dashboard-table-wrapper">
+app.post('/api/delete-resource', (req, res) => {.jpg" alt="Event">
+    const { filename } = req.body;
+    if (!filename) return res.json({ success: false });
+    const filePath = path.join(__dirname, 'uploads', filename);
+    let meta = loadUploadsMeta();
+    meta = meta.filter(file => file.filename !== filename);
+    saveUploadsMeta(meta);
+    fs.unlink(filePath, err => {
+        if (err) return res.json({ success: false });
+        res.json({ success: true });d-section">
+    });         <h2>Recent Tasks</h2>
+});             <div class="dashboard-table-wrapper">
                     <table class="dashboard-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Activity</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>5/3/25</td>
-                                <td>06:00 - 08:00</td>
-                                <td>Physical Training</td>
-                                <td>Parade Grounds</td>
-                            </tr>
-                            <tr>
-                                <td>5/10/25</td>
-                                <td>14:00 - 16:00</td>
-                                <td>Naval Tactics Lecture</td>
-                                <td>Lecture Hall A</td>
-                            </tr>
-                            <tr>
-                                <td>5/17/25</td>
-                                <td>08:00 - 10:00</td>
-                                <td>Drills and Ceremonies</td>
-                                <td>Drill Field</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="#" class="dashboard-link">Show All</a>
-                </div>
-            </section>
+app.post('/api/contact', async (req, res) => {
+  const { name, course, message } = req.body;
+  if (!name || !course || !message) {ate</th>
+    return res.status(400).json({ message: 'All fields are required.' });
+  }                             <th>Activity</th>
+  try {h>Location</th>
+    await pool.query(
+      'INSERT INTO messages (name, course, message) VALUES ($1, $2, $3)',/thead>
+      [name, course, message]
+    );                         <tr>
+    res.json({ message: 'Message sent successfully!' });                                <td>5/3/25</td>
+  } catch (err) {0</td>
+    console.error(err);d>Physical Training</td>
+    res.status(500).json({ message: 'Database error.' });           <td>Parade Grounds</td>
+  }                         </tr>
+});                            <tr>
 
-            <!-- Schedule Section -->
-            <section id="schedule" class="dashboard-section">
-                <h2>Schedule</h2>
-                <ul class="schedule-list">
-                    <li>
+app.get('/api/contact/messages', (req, res) => {:00</td>
+  const messages = loadMessages();
+  res.json(messages);</td>
+});
+                            <tr>
+// Protected clear signups endpoint (for development/testing only)  <td>5/17/25</td>
+app.post('/api/clear-signups', (req, res) => {
+  // Simple protection: require a secret token in the request header                             <td>Drills and Ceremonies</td>
+  const adminToken = req.headers['x-admin-token'];                                <td>Drill Field</td>
+  const SECRET = process.env.ADMIN_CLEAR_TOKEN || 'yuehanadminlangmalakas'; // Set this in Railway environment variables
+          </tbody>
+  if (adminToken !== SECRET) {
+    return res.status(403).json({ message: 'Forbidden: Invalid admin token.' });               <a href="#" class="dashboard-link">Show All</a>
+  }
+       </section>
+  db.run('DELETE FROM signups', function(err) {
+    if (err) {            <!-- Schedule Section -->
+      return res.status(500).json({ message: 'Failed to clear signups.' });"schedule" class="dashboard-section">
+    }
+    res.json({ message: 'All signups cleared.' });             <ul class="schedule-list">
+
+
+
+
+
+
+});  console.log(`Server running on port ${PORT}`);app.listen(PORT, () => {});  });                    <li>
                         <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
                     </li>
                     <li>

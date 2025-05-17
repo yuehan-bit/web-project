@@ -13,6 +13,7 @@ db.serialize(() => {
       school_id TEXT,
       full_name TEXT,
       course_year_section TEXT,
+      birthday TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);

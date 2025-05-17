@@ -4,16 +4,15 @@ function handleLogin(event) {
     const form = event.target;
     const username = form.username.value;
     const password = form.password.value;
-    const userType = form.userType.value; // Get the selected user type (cadet, instructor, or officer)
-    
-    // Clear previous error message if exists
-    const errorElement = document.getElementById('login-error');
-    if (errorElement) {
-        errorElement.classList.remove('visible');
-        errorElement.classList.remove('shake'); // Remove animation class if present
-    }
+    const userType = form.userType.value;
 
-    // Enhanced mock database with multiple users for each user type
+    // Clear previous error messages
+    const usernameError = document.getElementById('username-error');
+    const passwordError = document.getElementById('password-error');
+    if (usernameError) usernameError.textContent = '';
+    if (passwordError) passwordError.textContent = '';
+
+    // Mock database
     const mockDatabase = {
         cadet: [
             { username: "1234", password: "1234", name: "Cadet John" },
@@ -37,27 +36,33 @@ function handleLogin(event) {
         ]
     };
 
-    // Check if the user exists in the mock database
+    // Find user
     const user = mockDatabase[userType]?.find(user => user.username === username && user.password === password);
 
     if (user) {
-        // Save the user's name and userType in sessionStorage for personalization and role management
         sessionStorage.setItem("username", user.name);
         sessionStorage.setItem("userType", userType);
 
-        // Show loading spinner
         const loadingOverlay = document.getElementById('loading-overlay');
         loadingOverlay.classList.remove('hidden');
 
-        // Simulate loading time before redirecting
         setTimeout(() => {
-            window.location.href = `dashBoard/${userType}-dashboard.html`; // Redirect based on user type
-        }, 1500); // 1.5 seconds delay for loading spinner
+            window.location.href = `dashBoard/${userType}-dashboard.html`;
+        }, 1500);
     } else {
-        // If user credentials don't match, show an error message
-        alert("Invalid username or password. Please try again.");
+        // Show red error messages below inputs
+        let usernameValid = mockDatabase[userType]?.some(user => user.username === username);
+        if (!usernameValid) {
+            if (usernameError) usernameError.textContent = "Invalid username.";
+        } else {
+            if (passwordError) passwordError.textContent = "Invalid password.";
+        }
     }
 }
+
+// Add these lines to your HTML below each input:
+// <div class="error" id="username-error"></div>
+// <div class="error" id="password-error"></div>
 
 //flipping functionality for the signup form
 loginButton.onclick = function(){

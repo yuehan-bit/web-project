@@ -1,3 +1,12 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Check if user is logged in
+    const username = sessionStorage.getItem("username");
+    const userType = sessionStorage.getItem("userType");
+    // If not logged in, redirect to login page
+    if (!username || !userType) {
+        window.location.href = "../portals/portal.html";
+    }
+});
 
 function checkLoginStatus() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -17,15 +26,6 @@ function checkLoginStatus() {
 
 // Function to log out user
 function logout() {
-    // Clear all authentication data from both localStorage and sessionStorage
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userType");
-    localStorage.removeItem("username");
-    
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("userType");
-    sessionStorage.removeItem("username");
-    
-    // Redirect to login page
-    window.location.href = "../portal.html"; // Adjust path as needed
+    sessionStorage.clear();
+    window.location.href = "../portal.html";
 }

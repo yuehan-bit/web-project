@@ -17,11 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const schoolId = form['school-id'].value.trim();
         const fullName = form['full-name'].value.trim();
         const courseYearSection = form['course-year-section'].value.trim();
+        const birthday = form['birthday'].value.trim();
 
         fetch('/api/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ schoolId, fullName, courseYearSection })
+            body: JSON.stringify({ schoolId, fullName, courseYearSection,  birthday})
         })
             .then(res => res.json())
             .then(data => {

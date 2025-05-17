@@ -159,19 +159,8 @@
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
                 <h2>Resources</h2>
-                <ul class="resource-list">
-                    <li>
-                        <a href="../../docs/Training_Manual.pdf" target="_blank">
-                            <span class="material-icons-sharp">picture_as_pdf</span>
-                            Training Manual (PDF)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../../docs/Drill_Guide.docx" target="_blank">
-                            <span class="material-icons-sharp">description</span>
-                            Drill Guide (Word)
-                        </a>
-                    </li>
+                <ul class="resource-list" id="resource-list">
+                    <!-- Files will be loaded here -->
                 </ul>
             </section>
             <!-- Updates/Announcements Section -->
@@ -243,6 +232,23 @@
             document.getElementById('cadet-name').textContent = cadetName;
             document.getElementById('welcome-message').textContent = cadetName;
         });
+        async function loadResources() {
+            const res = await fetch('/api/resources');
+            const files = await res.json();
+            const list = document.getElementById('resource-list');
+            list.innerHTML = '';
+            files.forEach(file => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="/uploads/${file.filename}" target="_blank">
+                        <span class="material-icons-sharp">attach_file</span>
+                        ${file.originalname}
+                    </a>
+                `;
+                list.appendChild(li);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', loadResources);
     </script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>

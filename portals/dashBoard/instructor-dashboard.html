@@ -190,25 +190,8 @@
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
                 <h2>Resources</h2>
-                <ul class="resource-list">
-                    <li>
-                        <a href="../../docs/Training_Manual.pdf" target="_blank">
-                            <span class="material-icons-sharp">picture_as_pdf</span>
-                            Training Manual (PDF)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../../docs/Drill_Guide.docx" target="_blank">
-                            <span class="material-icons-sharp">description</span>
-                            Drill Guide (Word)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../../docs/Uniform_Standards.pdf" target="_blank">
-                            <span class="material-icons-sharp">picture_as_pdf</span>
-                            Uniform Standards (PDF)
-                        </a>
-                    </li>
+                <ul class="resource-list" id="resource-list">
+                    <!-- Files will be loaded here -->
                 </ul>
             </section>
 
@@ -234,11 +217,12 @@
             <!-- Upload Section -->
             <section id="uploads" class="dashboard-section">
                 <h2>Upload</h2>
-                <form class="upload-form">
+                <form class="upload-form" id="uploadForm">
                     <label for="upload-file">Select file to upload:</label>
                     <input type="file" id="upload-file" name="upload-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png">
                     <button type="submit" class="dashboard-link">Upload</button>
                 </form>
+                <div id="upload-status"></div>
                 <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
             </section>
 
@@ -575,6 +559,58 @@
                 alert('Profile updated!');
             });
         });
+
+        document.getElementById('uploadForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('upload-file', document.getElementById('upload-file').files[0]);
+            const res = await fetch('/api/upload', { method: 'POST', body: formData });
+            const data = await res.json();
+            document.getElementById('upload-status').textContent = 'File uploaded!';
+            loadResources(); // Refresh the resource list
+        };
+
+        // Load and display resources with delete buttons
+        async function loadResources() {
+            const res = await fetch('/api/resources');
+            const files = await res.json();
+            const list = document.getElementById('resource-list');
+            list.innerHTML = '';
+            files.forEach(file => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="/uploads/${file.filename}" target="_blank">
+                        <span class="material-icons-sharp">attach_file</span>
+                        ${file.originalname}
+                    </a>
+                    <button class="delete-btn" data-filename="${file.filename}" style="margin-left:1rem;color:#d32f2f;background:none;border:none;cursor:pointer;">
+                        <span class="material-icons-sharp" style="vertical-align:middle;">delete</span>
+                    </button>
+                `;
+                list.appendChild(li);
+            });
+
+            // Add delete event listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.onclick = async function() {
+                    if (confirm('Are you sure you want to delete this file?')) {
+                        const filename = this.getAttribute('data-filename');
+                        const res = await fetch('/api/delete-resource', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ filename })
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            loadResources();
+                        } else {
+                            alert('Failed to delete file.');
+                        }
+                    }
+                };
+            });
+        }
+        document.addEventListener('DOMContentLoaded', loadResources);
     </script>
 </body>
 </html>

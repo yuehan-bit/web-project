@@ -306,8 +306,10 @@
                     </select>
                   <label for="login-username">Username</label>
                   <input type="text" name="username" id="login-username" placeholder="Username" required autocomplete="username" />
+                  <div class="error" id="username-error"></div>
                   <label for="login-password">Password</label>
                   <input type="password" name="password" id="login-password" placeholder="Password" required autocomplete="current-password" />
+                  <div class="error" id="password-error"></div>
                   <div class="error" id="login-error" aria-live="polite"></div>
                   
                   <input type="submit" value="Login" class="portal-btn" />
@@ -322,6 +324,8 @@
                   <input type="text" name="school-id" id="signup-school-id" placeholder="School ID" required autocomplete="off" />
                   <label for="signup-full-name">Full Name</label>
                   <input type="text" name="full-name" id="signup-full-name" placeholder="SURNAME, FIRSTNAME MIDDLENAME" required autocomplete="name" />
+                  <label for="signup-birthday">Birthday</label>
+                  <input type="text" name="birthday" id="signup-birthday" placeholder="MM/DD/YYYY" required autocomplete="off" />
                   <label for="signup-course-year-section">Course Year-Section</label>
                   <input type="text" name="course-year-section" id="signup-course-year-section" placeholder="Course Year-Section" required autocomplete="off" />
                   <input type="submit" value="Sign Up" id="signup-button" class="portal-btn" />
@@ -350,5 +354,6 @@
       document.getElementById('showRegister').onclick = () => flipper.classList.add('flip');
       document.getElementById('showLogin').onclick = () => flipper.classList.remove('flip');
     </script>
+    <script src="..js/logged-in.js"></script>
 </body>
 </html>

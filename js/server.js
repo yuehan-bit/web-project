@@ -9,7 +9,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (HTML, CSS, JS, images) from the parent directory
-const path = require('path');
 app.use(express.static(path.join(__dirname, '..', '..')));
 
 app.get('/', (req, res) => {

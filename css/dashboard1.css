@@ -214,7 +214,7 @@ aside .sidebar a:last-child{
 aside .sidebar a.active{
     width: 80%;
     color: white;
-    background-color: rgba(0, 0, 255, 0.784);
+    /* background-color: rgba(0, 0, 255, 0.784); */
     margin-left: 8px;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
@@ -1739,4 +1739,126 @@ hr {
   border-radius: 6px;
 }
 
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeIn {
+  from { opacity: 0;}
+  to { opacity: 1;}
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px);}
+  to { opacity: 1; transform: translateX(0);}
+}
 
+/* Sidebar Animation */
+.sidebar, aside {
+  animation: slideInLeft 0.7s cubic-bezier(.77,0,.18,1) both;
+}
+
+/* Card Animation */
+.dashboard-card, .dashboard-section, .event-card, .profile-section {
+  animation: fadeInUp 0.7s cubic-bezier(.77,0,.18,1) both;
+  animation-delay: 0.2s;
+}
+
+/* Button Animations & Styles */
+.dashboard-link, .save-btn, .cancel-btn {
+  background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+  color: #fff;
+  border: none;
+  padding: 0.6em 2.2em;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.05em;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  margin-right: 0.5em;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+.dashboard-link:hover, .save-btn:hover, .cancel-btn:hover {
+  background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+}
+.save-btn {
+  background: linear-gradient(90deg, #43a047 60%, #66bb6a 100%);
+}
+.save-btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #43a047 100%);
+}
+.cancel-btn {
+  background: linear-gradient(90deg, #e53935 60%, #ff7043 100%);
+}
+.cancel-btn:hover {
+  background: linear-gradient(90deg, #b71c1c 60%, #e53935 100%);
+}
+
+/* Button Ripple Effect */
+.dashboard-link:active::after, .save-btn:active::after, .cancel-btn:active::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 200%; height: 200%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 0.5s linear;
+}
+@keyframes ripple {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0;}
+}
+
+/* Profile Section Animation */
+.profile-section {
+  animation: fadeIn 1s cubic-bezier(.77,0,.18,1) both;
+}
+
+/* Focus effect for inputs */
+input:focus, select:focus, textarea:focus {
+  border: 2px solid #1976d2;
+  outline: none;
+  box-shadow: 0 0 0 2px #90caf9;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* Card hover effect */
+.dashboard-card:hover, .event-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.18);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+/* Section fade-in on scroll */
+.dashboard-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.dashboard-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .dashboard-card, .dashboard-section, .profile-section {
+    animation-delay: 0s;
+  }
+  .dashboard-link, .save-btn, .cancel-btn {
+    width: 100%;
+    margin-bottom: 0.5em;
+  }
+}
+
+/* Blue sidebar when scrolled */
+aside.scrolled, .sidebar.scrolled {
+    background: linear-gradient(180deg, #1976d2 80%, #1565c0 100%);
+    box-shadow: 0 4px 24px rgba(25, 118, 210, 0.18);
+    transition: background 0.4s, box-shadow 0.3s;
+}

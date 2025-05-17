@@ -1,4 +1,4 @@
-var openi = document.getElementById("open")
+/* var openi = document.getElementById("open")
 var closei = document.getElementById("close")
 var sidebarchangediv = document.getElementById("sidebarchangediv")
 var sidebar =  document.getElementById("sidebar")
@@ -18,7 +18,7 @@ closei.addEventListener('click', ()=>{
 
 var cartcount = 0;
 var realcartcount = document.querySelectorAll("cartcount")
-var addtocart = document.querySelectorAll("#addtocartbtn")
+var addtocart = document.querySelectorAll("#addtocartbtn") */
 
 
 /* // function addtoocart(){

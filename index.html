@@ -68,6 +68,41 @@
       .subunit { font-size: 1rem; padding: 1rem; }
       .modal-content { padding: 1.2rem 0.5rem; }
     }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 400px;
+    }
+    .contact-form label {
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+    }
+    .contact-form input, .contact-form textarea {
+      padding: 0.5em;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    .dashboard-link {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      padding: 0.5em 2em;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .dashboard-link:hover {
+      background: #1565c0;
+    }
+    #contact-status {
+      margin-top: 0.5em;
+      font-weight: 500;
+    }
   </style>
 </head>
 
@@ -256,6 +291,23 @@
       <h3 id="fetureheaders" data-aos="zoom-in">Contact Us<br>
         <hr id="horizontalline">
       </h3>
+      <center>
+      <form id="contact-form" class="contact-form">
+        <label>
+          Name:
+          <input type="text" name="name" required>
+        </label>
+        <label>
+          Course, Year & Section:
+          <input type="text" name="course" required>
+        </label>
+        <label>
+          Message:
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="dashboard-link">Send</button>
+      </form>
+      <p id="contact-status"></p>
       <div id="contact-options" data-aos="zoom-in">
         <div class="contact-method" data-aos="fade-right">
           <img src="img/facebook.png" id="contact-icon" alt="Facebook" style="max-width: 50px; height: auto;">
@@ -270,7 +322,7 @@
           </div>
       </div>
     </section>
-
+</center>
   </main>
   <footer>
     <div id="footer" data-aos="fade-top">
@@ -319,6 +371,30 @@
     document.getElementById('unitModal').onclick = function(e) {
       if (e.target === this) closeModal();
     };
+
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const status = document.getElementById('contact-status');
+      status.textContent = "Sending...";
+      const formData = new FormData(this);
+      const data = {
+        name: formData.get('name'),
+        course: formData.get('course'),
+        message: formData.get('message')
+      };
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        status.textContent = result.message || 'Message sent!';
+        if (res.ok) this.reset();
+      } catch {
+        status.textContent = "Failed to send message.";
+      }
+    });
   </script>
 </body>
 <p id="copyright">&copy; 2025 PLV-NROTC. All Rights Reserved.</p>

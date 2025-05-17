@@ -190,9 +190,7 @@
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
                 <h2>Resources</h2>
-                <ul class="resource-list" id="resource-list">
-                    <!-- Files will be loaded here -->
-                </ul>
+                <ul class="resource-list" id="resource-list"></ul>
             </section>
 
             <!-- Updates/Announcements Section -->
@@ -216,15 +214,131 @@
 
             <!-- Upload Section -->
             <section id="uploads" class="dashboard-section">
-                <h2>Upload</h2>
-                <form class="upload-form" id="uploadForm">
-                    <label for="upload-file">Select file to upload:</label>
-                    <input type="file" id="upload-file" name="upload-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png">
-                    <button type="submit" class="dashboard-link">Upload</button>
-                </form>
-                <div id="upload-status"></div>
-                <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
-            </section>
+  <h2>Upload a File</h2>
+  <form id="upload-form" class="upload-form" enctype="multipart/form-data">
+    <label for="upload-file" class="upload-label">
+      <span class="material-icons-sharp" style="font-size:2rem;vertical-align:middle;">cloud_upload</span>
+      <span id="file-label-text">Choose a file or drag it here</span>
+      <input type="file" id="upload-file" name="upload-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png" required hidden>
+    </label>
+    <button type="submit" class="dashboard-link">Upload</button>
+  </form>
+  <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
+  <p id="upload-status"></p>
+</section>
+
+<style>
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  background: #f5f7fa;
+  border: 2px dashed #1976d2;
+  border-radius: 8px;
+  padding: 1em 2em;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+  width: 100%;
+  max-width: 400px;
+}
+.upload-label.dragover {
+  background: #e3f2fd;
+  border-color: #1565c0;
+}
+.upload-label span {
+  pointer-events: none;
+}
+.dashboard-link {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 0.5em 2em;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.dashboard-link:hover {
+  background: #1565c0;
+}
+.text-muted {
+  color: #888;
+  font-size: 0.95em;
+}
+#upload-status {
+  font-weight: 500;
+  margin-top: 0.5em;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const uploadForm = document.getElementById('upload-form');
+  const fileInput = document.getElementById('upload-file');
+  const label = document.querySelector('.upload-label');
+  const labelText = document.getElementById('file-label-text');
+  const status = document.getElementById('upload-status');
+
+  // Show selected file name
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length) {
+      labelText.textContent = fileInput.files[0].name;
+    } else {
+      labelText.textContent = 'Choose a file or drag it here';
+    }
+  });
+
+  // Drag and drop support
+  label.addEventListener('dragover', e => {
+    e.preventDefault();
+    label.classList.add('dragover');
+  });
+  label.addEventListener('dragleave', e => {
+    e.preventDefault();
+    label.classList.remove('dragover');
+  });
+  label.addEventListener('drop', e => {
+    e.preventDefault();
+    label.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      labelText.textContent = fileInput.files[0].name;
+    }
+  });
+
+  // Upload handler
+  uploadForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!fileInput.files.length) {
+      status.textContent = "Please select a file.";
+      return;
+    }
+    status.textContent = "Uploading...";
+    const formData = new FormData(uploadForm);
+    fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      status.textContent = data.message || 'Upload complete!';
+      fileInput.value = '';
+      labelText.textContent = 'Choose a file or drag it here';
+      if (typeof loadResources === 'function') loadResources();
+    })
+    .catch(() => {
+      status.textContent = 'Upload failed.';
+    });
+  });
+});
+</script>
 
             <!-- Search Section -->
             <section id="search" class="dashboard-section">
@@ -305,6 +419,12 @@
                     </li>
                 </ul>
             </section>
+
+            <!-- Contact Messages Section -->
+            <section id="contact-messages" class="dashboard-section">
+  <h2>Contact Messages</h2>
+  <ul id="messages-list"></ul>
+</section>
         </main>
         
         <!-- Right Section for Profile and Reminders -->
@@ -441,7 +561,7 @@
     
     <script>
         // Dark Mode Toggle
-        const darkModeToggle = document.querySelector('.dark-mode');
+        /* const darkModeToggle = document.querySelector('.dark-mode');
         const body = document.querySelector('body');
         
         darkModeToggle.addEventListener('click', () => {
@@ -457,9 +577,9 @@
                 darkMode.classList.remove('active');
                 lightMode.classList.add('active');
             }
-        });
+        }); */
         
-        // Mobile Menu Toggle
+        /* // Mobile Menu Toggle
         const menuBtn = document.getElementById('menu-btn');
         const closeBtn = document.getElementById('close-btn');
         const sidebar = document.querySelector('aside');
@@ -470,7 +590,7 @@
         
         closeBtn.addEventListener('click', () => {
             sidebar.style.display = 'none';
-        });
+        }); */
         
         // Logout Function
         function logout() {
@@ -517,6 +637,33 @@
             // You can add AJAX here to save the data to your backend if needed
             alert('Profile updated!');
         });
+
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('upload-status').textContent = data.message || 'Upload complete!';
+                loadResources();
+            })
+            .catch(() => {
+                document.getElementById('upload-status').textContent = 'Upload failed.';
+            });
+        });
+
+        /* document.getElementById('uploadForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('upload-file', document.getElementById('upload-file').files[0]);
+            const res = await fetch('/api/upload', { method: 'POST', body: formData });
+            const data = await res.json();
+            document.getElementById('upload-status').textContent = 'File uploaded!';
+            loadResources(); // Refresh the resource list
+        }; */
     </script>
     <script src="../../js/logged-in.js"></script>
     <script>
@@ -559,18 +706,8 @@
                 alert('Profile updated!');
             });
         });
-
-        document.getElementById('uploadForm').onsubmit = async function(e) {
-            e.preventDefault();
-            const formData = new FormData();
-            formData.append('upload-file', document.getElementById('upload-file').files[0]);
-            const res = await fetch('/api/upload', { method: 'POST', body: formData });
-            const data = await res.json();
-            document.getElementById('upload-status').textContent = 'File uploaded!';
-            loadResources(); // Refresh the resource list
-        };
-
-        // Load and display resources with delete buttons
+    </script>
+    <script>
         async function loadResources() {
             const res = await fetch('/api/resources');
             const files = await res.json();
@@ -579,38 +716,84 @@
             files.forEach(file => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <a href="/uploads/${file.filename}" target="_blank">
-                        <span class="material-icons-sharp">attach_file</span>
+                    <a href="/api/download/${file.filename}">
+                        <span class="material-icons-sharp">download</span>
                         ${file.originalname}
                     </a>
-                    <button class="delete-btn" data-filename="${file.filename}" style="margin-left:1rem;color:#d32f2f;background:none;border:none;cursor:pointer;">
-                        <span class="material-icons-sharp" style="vertical-align:middle;">delete</span>
-                    </button>
                 `;
                 list.appendChild(li);
-            });
-
-            // Add delete event listeners
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.onclick = async function() {
-                    if (confirm('Are you sure you want to delete this file?')) {
-                        const filename = this.getAttribute('data-filename');
-                        const res = await fetch('/api/delete-resource', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ filename })
-                        });
-                        const data = await res.json();
-                        if (data.success) {
-                            loadResources();
-                        } else {
-                            alert('Failed to delete file.');
-                        }
-                    }
-                };
             });
         }
         document.addEventListener('DOMContentLoaded', loadResources);
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const uploadForm = document.getElementById('upload-form');
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const button = uploadForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      const formData = new FormData(this);
+      fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('upload-status').textContent = data.message || 'Upload complete!';
+        if (typeof loadResources === 'function') loadResources();
+      })
+      .finally(() => {
+        button.disabled = false;
+      });
+    });
+  }
+});
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+  const sections = Array.from(sidebarLinks).map(link => {
+    const section = document.querySelector(link.getAttribute('href'));
+    return section;
+  });
+
+  function onScroll() {
+    let activeIndex = 0;
+    sections.forEach((section, i) => {
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 80) activeIndex = i;
+      }
+    });
+    sidebarLinks.forEach(link => link.classList.remove('active'));
+    if (sidebarLinks[activeIndex]) sidebarLinks[activeIndex].classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // highlight on load
+});
+</script>
+<script>
+async function loadContactMessages() {
+  const res = await fetch('/api/contact/messages');
+  const messages = await res.json();
+  const list = document.getElementById('messages-list');
+  list.innerHTML = '';
+  if (Array.isArray(messages) && messages.length > 0) {
+    messages.forEach(msg => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${msg.name}</strong> (${msg.course})<br>
+        <em>${new Date(msg.date).toLocaleString()}</em><br>
+        ${msg.message}`;
+      list.appendChild(li);
+    });
+  } else {
+    list.innerHTML = '<li>No messages yet.</li>';
+  }
+}
+document.addEventListener('DOMContentLoaded', loadContactMessages);
+</script>
 </body>
 </html>

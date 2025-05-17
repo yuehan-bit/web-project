@@ -161,10 +161,27 @@
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
                 <h2>Resources</h2>
-                <ul class="resource-list" id="resource-list">
-                    <!-- Files will be loaded here -->
-                </ul>
+                <ul class="resource-list" id="resource-list"></ul>
             </section>
+            <script>
+            async function loadResources() {
+              const res = await fetch('/api/resources');
+              const files = await res.json();
+              const list = document.getElementById('resource-list');
+              list.innerHTML = '';
+              files.forEach(file => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                  <a href="/api/download/${file.filename}">
+                    <span class="material-icons-sharp">download</span>
+                    ${file.originalname}
+                  </a>
+                `;
+                list.appendChild(li);
+              });
+            }
+            document.addEventListener('DOMContentLoaded', loadResources);
+            </script>
             <!-- Updates/Announcements Section -->
             <section id="announcements" class="dashboard-section">
                 <h2>Updates</h2>
@@ -348,8 +365,8 @@
         // Welcome message personalization
         document.addEventListener('DOMContentLoaded', function() {
             const cadetName = sessionStorage.getItem("username") || "Cadet";
-            document.getElementById('cadet-name').textContent = cadetName;
-            document.getElementById('welcome-message').textContent = cadetName;
+            document.getElementById('cadet-name').textContent = cadetName;/* 
+            document.getElementById('welcome-message').textContent = cadetName; */
         });
         async function loadResources() {
             const res = await fetch('/api/resources');
@@ -359,8 +376,8 @@
             files.forEach(file => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <a href="/uploads/${file.filename}" target="_blank">
-                        <span class="material-icons-sharp">attach_file</span>
+                    <a href="/api/download/${file.filename}">
+                        <span class="material-icons-sharp">download</span>
                         ${file.originalname}
                     </a>
                 `;
@@ -470,6 +487,58 @@ cancelCropBtn.onclick = function() {
     cropperModal.style.display = 'none';
     picInput.value = ""; // reset input
 };
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('/api/resources')
+    .then(res => res.json())
+    .then(files => {
+      const list = document.getElementById('resource-list');
+      list.innerHTML = '';
+      if (Array.isArray(files) && files.length > 0) {
+        files.forEach(file => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="/api/download/${file.filename}">
+              <span class="material-icons-sharp">download</span>
+              ${file.originalname}
+            </a>
+          `;
+          list.appendChild(li);
+        });
+      } else {
+        list.innerHTML = '<li>No resources found.</li>';
+      }
+    })
+    .catch(() => {
+      const list = document.getElementById('resource-list');
+      list.innerHTML = '<li>Failed to load resources.</li>';
+    });
+});
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+  const sections = Array.from(sidebarLinks).map(link => {
+    const section = document.querySelector(link.getAttribute('href'));
+    return section;
+  });
+
+  function onScroll() {
+    let activeIndex = 0;
+    sections.forEach((section, i) => {
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 80) activeIndex = i;
+      }
+    });
+    sidebarLinks.forEach(link => link.classList.remove('active'));
+    if (sidebarLinks[activeIndex]) sidebarLinks[activeIndex].classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // highlight on load
+});
 </script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>

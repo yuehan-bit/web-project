@@ -7,21 +7,41 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Ensure uploads folder exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
+
+const upload = multer({ dest: uploadsDir });
 const uploadsMetaPath = path.join(__dirname, 'uploads', 'uploads.json');
 
-// Helper: Load uploads metadata
-function loadUploadsMeta() {
-    if (!fs.existsSync(uploadsMetaPath)) return [];
-    return JSON.parse(fs.readFileSync(uploadsMetaPath, 'utf8'));
+const messagesPath = path.join(__dirname, 'contact/messages.json');
+
+function loadMessages() {
+  try {
+    return JSON.parse(fs.readFileSync(messagesPath, 'utf8'));
+  } catch {
+    return [];
+  }
+}
+function saveMessages(messages) {
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
 }
 
-// Helper: Save uploads metadata
+// Helper to load and save uploads metadata
+function loadUploadsMeta() {
+  try {
+    return JSON.parse(fs.readFileSync(uploadsMetaPath, 'utf8'));
+  } catch {
+    return [];
+  }
+}
 function saveUploadsMeta(meta) {
-    fs.writeFileSync(uploadsMetaPath, JSON.stringify(meta, null, 2));
+  fs.writeFileSync(uploadsMetaPath, JSON.stringify(meta, null, 2));
 }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Serve static files (HTML, CSS, JS, images) from the parent directory
 app.use(express.static(path.join(__dirname)));
@@ -57,44 +77,44 @@ app.get('/api/signups', (req, res) => {
   });
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'uploads/'));
-  },
-  filename: function (req, file, cb) {
-    // Save with a unique timestamp + original extension
-    const ext = path.extname(file.originalname);
-    const base = path.basename(file.originalname, ext);
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, `${base}-${unique}${ext}`);
-  }
-});
-const upload = multer({ storage: storage });
-
 // Upload endpoint (for instructors)
 app.post('/api/upload', upload.single('upload-file'), (req, res) => {
-    if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
+  if (!req.file) return res.status(400).json({ message: "Didn't upload file" });
 
-    // Save metadata
-    let meta = loadUploadsMeta();
-    meta.push({
-        filename: req.file.filename,
-        originalname: req.file.originalname,
-        uploadedAt: new Date().toISOString()
-    });
-    saveUploadsMeta(meta);
+  let meta = loadUploadsMeta();
 
-    res.json({ filename: req.file.filename, originalname: req.file.originalname });
+  // Remove any existing entry with the same filename or originalname
+  meta = meta.filter(f => f.filename !== req.file.filename && f.originalname !== req.file.originalname);
+
+  // Add the new file entry
+  meta.push({
+    filename: req.file.filename,
+    originalname: req.file.originalname,
+    mimetype: req.file.mimetype,
+    size: req.file.size,
+    uploadedAt: new Date().toISOString()
+  });
+  saveUploadsMeta(meta);
+
+  res.json({ message: 'File uploaded successfully!', filename: req.file.filename });
 });
 
 // List uploaded files (for all users)
 app.get('/api/resources', (req, res) => {
-    let meta = loadUploadsMeta();
-    res.json(meta.reverse()); // newest first
+  let meta = loadUploadsMeta();
+  res.json(meta);
 });
 
 // Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadsDir));
+
+app.get('/api/download/:filename', (req, res) => {
+  const meta = loadUploadsMeta();
+  const fileMeta = meta.find(f => f.filename === req.params.filename);
+  if (!fileMeta) return res.status(404).send('File not found');
+  const filePath = path.join(__dirname, 'uploads', fileMeta.filename);
+  res.download(filePath, fileMeta.originalname);
+});
 
 app.post('/api/delete-resource', (req, res) => {
     const { filename } = req.body;
@@ -107,6 +127,22 @@ app.post('/api/delete-resource', (req, res) => {
         if (err) return res.json({ success: false });
         res.json({ success: true });
     });
+});
+
+app.post('/api/contact', (req, res) => {
+  const { name, course, message } = req.body;
+  if (!name || !course || !message) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+  const messages = loadMessages();
+  messages.push({ name, course, message, date: new Date().toISOString() });
+  saveMessages(messages);
+  res.json({ message: 'Message sent successfully!' });
+});
+
+app.get('/api/contact/messages', (req, res) => {
+  const messages = loadMessages();
+  res.json(messages);
 });
 
 // Protected clear signups endpoint (for development/testing only)

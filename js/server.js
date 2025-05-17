@@ -1,10 +1,12 @@
 const express = require('express');
-const fs = require('fs');
+const bodyParser = require('body-parser');
+const db = require('./db');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (HTML, CSS, JS, images) from the parent directory
 app.use(express.static(path.join(__dirname, '..')));
@@ -13,24 +15,29 @@ app.get('/', (req, res) => {
   res.send('Server is running!');
 });
 
+// Signup endpoint
 app.post('/api/signup', (req, res) => {
   const { schoolId, fullName, courseYearSection } = req.body;
-  const logLine = `${new Date().toISOString()}, ${schoolId}, ${fullName}, ${courseYearSection}\n`;
-  fs.appendFile(path.join(__dirname, 'signups.log'), logLine, err => {
-    if (err) {
-      return res.status(500).json({ message: 'Failed to log signup.' });
+  if (!schoolId || !fullName || !courseYearSection) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+  db.run(
+    `INSERT INTO signups (school_id, full_name, course_year_section) VALUES (?, ?, ?)`,
+    [schoolId, fullName, courseYearSection],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ message: 'Database error.' });
+      }
+      res.status(200).json({ message: 'Signup successful!', id: this.lastID });
     }
-    res.status(200).json({ message: 'Signup logged.' });
-  });
+  );
 });
 
+// (Optional) Endpoint to view signups
 app.get('/api/signups', (req, res) => {
-  const logPath = path.join(__dirname, 'signups.log');
-  fs.readFile(logPath, 'utf8', (err, data) => {
-    if (err) {
-      return res.status(404).send('No signups found.');
-    }
-    res.type('text/plain').send(data);
+  db.all(`SELECT * FROM signups ORDER BY created_at DESC`, [], (err, rows) => {
+    if (err) return res.status(500).json({ message: 'Database error.' });
+    res.json(rows);
   });
 });
 

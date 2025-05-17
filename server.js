@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./db');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const { Pool } = require('pg');
+const mysql = require('mysql2/promise');
+const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -12,6 +13,21 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Railway sets this automatically
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
+
+/* const db = mysql.createPool({
+  uri: process.env.MYSQL_URL // Set this in Railway Variables (use your MySQL connection string)
+}); */
+
+const db = new sqlite3.Database('messages.db');
+
+// Create the messages table if it doesn't exist
+db.run(`CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  course TEXT NOT NULL,
+  message TEXT NOT NULL,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)`);
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -135,31 +151,32 @@ app.post('/api/delete-resource', (req, res) => {
     });
 });
 
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', (req, res) => {
   const { name, course, message } = req.body;
   if (!name || !course || !message) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
-  try {
-    await pool.query(
-      'INSERT INTO messages (name, course, message) VALUES ($1, $2, $3)',
-      [name, course, message]
-    );
-    res.json({ message: 'Message sent successfully!' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Database error.' });
-  }
+  db.run(
+    'INSERT INTO messages (name, course, message) VALUES (?, ?, ?)',
+    [name, course, message],
+    function (err) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Database error.' });
+      }
+      res.json({ message: 'Message sent successfully!' });
+    }
+  );
 });
 
-app.get('/api/contact/messages', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM messages ORDER BY date DESC');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Database error.' });
-  }
+app.get('/api/contact/messages', (req, res) => {
+  db.all('SELECT * FROM messages ORDER BY date DESC', [], (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Database error.' });
+    }
+    res.json(rows);
+  });
 });
 
 // Protected clear signups endpoint (for development/testing only)

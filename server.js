@@ -109,6 +109,24 @@ app.post('/api/delete-resource', (req, res) => {
     });
 });
 
+// Protected clear signups endpoint (for development/testing only)
+app.post('/api/clear-signups', (req, res) => {
+  // Simple protection: require a secret token in the request header
+  const adminToken = req.headers['x-admin-token'];
+  const SECRET = process.env.ADMIN_CLEAR_TOKEN || 'changeme123'; // Set this in Railway environment variables
+
+  if (adminToken !== SECRET) {
+    return res.status(403).json({ message: 'Forbidden: Invalid admin token.' });
+  }
+
+  db.run('DELETE FROM signups', function(err) {
+    if (err) {
+      return res.status(500).json({ message: 'Failed to clear signups.' });
+    }
+    res.json({ message: 'All signups cleared.' });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

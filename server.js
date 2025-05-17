@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // Initialize SQLite database
 const db = new sqlite3.Database('messages.db');
 
-// Create tables if they don't exist
+/* // Create tables if they don't exist
 db.run(`CREATE TABLE IF NOT EXISTS messages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
@@ -25,7 +25,7 @@ db.run(`CREATE TABLE IF NOT EXISTS signups (
   course_year_section TEXT NOT NULL,
   birthday TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)`);
+)`); */
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');

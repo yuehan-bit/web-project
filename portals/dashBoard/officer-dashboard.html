@@ -201,6 +201,106 @@
                 <p>Unit Officer</p>
                 <p>PLV NROTC</p>
             </div>
+            <div class="profile-section">
+                <h2>Reservist Information</h2>
+                <button id="edit-profile-btn" class="dashboard-link" type="button" style="margin-bottom:1rem; cursor:pointer;">Edit</button>
+                <div class="profile-table-wrapper">
+                    <form id="profile-form">
+                        <table class="profile-table">
+<tr>
+                                <th>Personnel Classification</th>
+                                <td><input type="text" name="classification" value="Ready Reserve" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Rank</th>
+                                <td><input type="text" name="rank" value="LTJG" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td><input type="text" name="firstName" value="Juan" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Middle Name</th>
+                                <td><input type="text" name="middleName" value="Dela Cruz" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td><input type="text" name="lastName" value="Santos" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Ext</th>
+                                <td><input type="text" name="ext" value="Jr." disabled></td>
+                            </tr>
+                            <tr>
+                                <th>AFPSN</th>
+                                <td><input type="text" name="afpsn" value="123456789" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>BOS</th>
+                                <td><input type="text" name="bos" value="NAVY" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Classification</th>
+                                <td><input type="text" name="class" value="Officer" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Mob Cen</th>
+                                <td><input type="text" name="mobcen" value="Manila" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Source of Commission</th>
+                                <td><input type="text" name="source" value="ROTC" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Commission Category</th>
+                                <td><input type="text" name="commissionCategory" value="Regular" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthday</th>
+                                <td><input type="date" name="birthday" value="1990-01-01" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthplace</th>
+                                <td><input type="text" name="birthplace" value="Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Sex</th>
+                                <td><input type="text" name="sex" value="Male" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Civil Status</th>
+                                <td><input type="text" name="civilStatus" value="Single" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Height (cm)</th>
+                                <td><input type="number" name="height" value="170" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Weight (kg)</th>
+                                <td><input type="number" name="weight" value="65" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><input type="email" name="email" value="juan.santos@email.com" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Primary CP No.</th>
+                                <td><input type="text" name="cp" value="09171234567" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Present Address</th>
+                                <td><input type="text" name="presentAddress" value="123 Main St, Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Permanent Address</th>
+                                <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
+                            </tr>
+                        </table>                        </table>
+                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;margin-top:1rem;">Save</button>
+                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;margin-top:1rem;">Cancel</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Mobile Navigation Bar -->
@@ -251,6 +351,46 @@
             document.getElementById('welcome-message').textContent = officerName;
         });
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editBtn = document.getElementById('edit-profile-btn');
+    const saveBtn = document.getElementById('save-profile-btn');
+    const cancelBtn = document.getElementById('cancel-profile-btn');
+    const form = document.getElementById('profile-form');
+    const inputs = form.querySelectorAll('input');
+    let originalValues = {};
+
+    editBtn.onclick = function() {
+        inputs.forEach(input => {
+            input.disabled = false;
+            originalValues[input.name] = input.value;
+        });
+        saveBtn.style.display = '';
+        cancelBtn.style.display = '';
+        editBtn.style.display = 'none';
+    };
+
+    cancelBtn.onclick = function() {
+        inputs.forEach(input => {
+            input.value = originalValues[input.name];
+            input.disabled = true;
+        });
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        editBtn.style.display = '';
+    };
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        // Here you can add AJAX to save to backend if needed
+        inputs.forEach(input => input.disabled = true);
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        editBtn.style.display = '';
+        alert('Profile saved!');
+    };
+});
+</script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>
 </body>

@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+    <link  href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -180,11 +182,128 @@
         </main>
         <!-- Right Section for Profile Card -->
         <div class="right-section">
+            <!-- <div class="profile-section">
+                <img src="../../img/default-profile.png" alt="Profile Picture" id="profile-pic">
+                <input type="file" id="profile-pic-input" style="display:none;">
+                <h2><span id="welcome-message">Officer</span></h2>
+                <p>Unit Officer</p>
+                <p>PLV NROTC</p>
+            </div> -->
             <div class="profile-section">
-                <img src="../../img/default-profile.png" alt="Profile Picture">
-                <h2><span id="welcome-message">Cadet</span></h2>
-                <p>2nd Year Cadet</p>
-                <p>Marine Option</p>
+                <h2>Reservist Information</h2>
+                <div style="text-align:center; margin-bottom:1rem;">
+                    <img id="profile-pic" src="../../img/default-profile.png" alt="Profile Picture" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+                    <br>
+                    <input type="file" id="profile-pic-input" accept="image/*" style="margin-top:0.5rem;">
+                </div>
+
+                <!-- Cropper Modal -->
+                <div id="cropper-modal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+                  <div style="background:#fff;padding:1rem;border-radius:8px;max-width:90vw;max-height:90vh;">
+                    <img id="cropper-image" style="max-width:80vw;max-height:60vh;">
+                    <br>
+                    <button id="crop-btn" style="margin-top:1rem;">Crop &amp; Use</button>
+                    <button id="cancel-crop-btn" style="margin-top:1rem;">Cancel</button>
+                  </div>
+                </div>
+
+                <button id="edit-profile-btn" class="dashboard-link" type="button" style="margin-bottom:1rem; cursor:pointer;">Edit</button>
+                <div class="profile-table-wrapper">
+                    <form id="profile-form">
+                        <table class="profile-table">
+                            <tr>
+                                <th>Personnel Classification</th>
+                                <td><input type="text" name="classification" value="Ready Reserve" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Rank</th>
+                                <td><input type="text" name="rank" value="LTJG" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td><input type="text" name="firstName" value="Juan" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Middle Name</th>
+                                <td><input type="text" name="middleName" value="Dela Cruz" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td><input type="text" name="lastName" value="Santos" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Ext</th>
+                                <td><input type="text" name="ext" value="Jr." disabled></td>
+                            </tr>
+                            <tr>
+                                <th>AFPSN</th>
+                                <td><input type="text" name="afpsn" value="123456789" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>BOS</th>
+                                <td><input type="text" name="bos" value="NAVY" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Classification</th>
+                                <td><input type="text" name="class" value="Officer" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Mob Cen</th>
+                                <td><input type="text" name="mobcen" value="Manila" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Source of Commission</th>
+                                <td><input type="text" name="source" value="ROTC" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Commission Category</th>
+                                <td><input type="text" name="commissionCategory" value="Regular" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthday</th>
+                                <td><input type="date" name="birthday" value="1990-01-01" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Birthplace</th>
+                                <td><input type="text" name="birthplace" value="Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Sex</th>
+                                <td><input type="text" name="sex" value="Male" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Civil Status</th>
+                                <td><input type="text" name="civilStatus" value="Single" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Height (cm)</th>
+                                <td><input type="number" name="height" value="170" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Weight (kg)</th>
+                                <td><input type="number" name="weight" value="65" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><input type="email" name="email" value="juan.santos@email.com" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Primary CP No.</th>
+                                <td><input type="text" name="cp" value="09171234567" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Present Address</th>
+                                <td><input type="text" name="presentAddress" value="123 Main St, Quezon City" disabled></td>
+                            </tr>
+                            <tr>
+                                <th>Permanent Address</th>
+                                <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
+                            </tr>
+                        </table>                        </table>
+                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;margin-top:1rem;">Save</button>
+                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;margin-top:1rem;">Cancel</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -250,6 +369,108 @@
         }
         document.addEventListener('DOMContentLoaded', loadResources);
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Profile picture upload and preview
+    const picInput = document.getElementById('profile-pic-input');
+    const picImg = document.getElementById('profile-pic');
+
+    picInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                picImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const editBtn = document.getElementById('edit-profile-btn');
+    const saveBtn = document.getElementById('save-profile-btn');
+    const cancelBtn = document.getElementById('cancel-profile-btn');
+    const form = document.getElementById('profile-form');
+    const inputs = form.querySelectorAll('input');
+    let originalValues = {};
+
+    editBtn.onclick = function() {
+        inputs.forEach(input => {
+            input.disabled = false;
+            originalValues[input.name] = input.value;
+        });
+        saveBtn.style.display = '';
+        cancelBtn.style.display = '';
+        editBtn.style.display = 'none';
+    };
+
+    cancelBtn.onclick = function() {
+        inputs.forEach(input => {
+            input.value = originalValues[input.name];
+            input.disabled = true;
+        });
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        editBtn.style.display = '';
+    };
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        // Here you can add AJAX to save to backend if needed
+        inputs.forEach(input => input.disabled = true);
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        editBtn.style.display = '';
+        alert('Profile saved!');
+    };
+});
+</script>
+    <script>
+let cropper;
+const picInput = document.getElementById('profile-pic-input');
+const picImg = document.getElementById('profile-pic');
+const cropperModal = document.getElementById('cropper-modal');
+const cropperImage = document.getElementById('cropper-image');
+const cropBtn = document.getElementById('crop-btn');
+const cancelCropBtn = document.getElementById('cancel-crop-btn');
+
+picInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            cropperImage.src = e.target.result;
+            cropperModal.style.display = 'flex';
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 1
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+cropBtn.onclick = function() {
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+            width: 200,
+            height: 200,
+            imageSmoothingQuality: 'high'
+        });
+        picImg.src = canvas.toDataURL();
+        cropper.destroy();
+        cropperModal.style.display = 'none';
+        picInput.value = ""; // reset input
+    }
+};
+
+cancelCropBtn.onclick = function() {
+    if (cropper) cropper.destroy();
+    cropperModal.style.display = 'none';
+    picInput.value = ""; // reset input
+};
+</script>
     <script src="../../js/dashboard.js"></script>
     <script src="../../js/logged-in.js"></script>
 </body>

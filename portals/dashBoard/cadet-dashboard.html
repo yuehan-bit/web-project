@@ -34,7 +34,7 @@
                     <span class="material-icons-sharp">person</span>
                     <h3>Profile</h3>
                 </a>
-                <a href="#schedule" class="active">
+                <a href="#schedule">
                     <span class="material-icons-sharp">calendar_today</span>
                     <h3>Schedule</h3>
                 </a>
@@ -233,93 +233,93 @@
                         <table class="profile-table">
                             <tr>
                                 <th>Personnel Classification</th>
-                                <td><input type="text" name="classification" value="Ready Reserve" disabled></td>
+                                <td><input type="text" name="classification" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Rank</th>
-                                <td><input type="text" name="rank" value="LTJG" disabled></td>
+                                <td><input type="text" name="rank" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>First Name</th>
-                                <td><input type="text" name="firstName" value="Juan" disabled></td>
+                                <td><input type="text" name="firstName" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Middle Name</th>
-                                <td><input type="text" name="middleName" value="Dela Cruz" disabled></td>
+                                <td><input type="text" name="middleName" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Last Name</th>
-                                <td><input type="text" name="lastName" value="Santos" disabled></td>
+                                <td><input type="text" name="lastName" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Ext</th>
-                                <td><input type="text" name="ext" value="Jr." disabled></td>
+                                <td><input type="text" name="ext" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>AFPSN</th>
-                                <td><input type="text" name="afpsn" value="123456789" disabled></td>
+                                <td><input type="text" name="afpsn" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>BOS</th>
-                                <td><input type="text" name="bos" value="NAVY" disabled></td>
+                                <td><input type="text" name="bos" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Classification</th>
-                                <td><input type="text" name="class" value="Officer" disabled></td>
+                                <td><input type="text" name="class" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Mob Cen</th>
-                                <td><input type="text" name="mobcen" value="Manila" disabled></td>
+                                <td><input type="text" name="mobcen" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Source of Commission</th>
-                                <td><input type="text" name="source" value="ROTC" disabled></td>
+                                <td><input type="text" name="source" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Commission Category</th>
-                                <td><input type="text" name="commissionCategory" value="Regular" disabled></td>
+                                <td><input type="text" name="commissionCategory" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Birthday</th>
-                                <td><input type="date" name="birthday" value="1990-01-01" disabled></td>
+                                <td><input type="date" name="birthday" value="" disabled></td>
                             </tr>
                             <tr>
                                 <th>Birthplace</th>
-                                <td><input type="text" name="birthplace" value="Quezon City" disabled></td>
+                                <td><input type="text" name="birthplace" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Sex</th>
-                                <td><input type="text" name="sex" value="Male" disabled></td>
+                                <td><input type="text" name="sex" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Civil Status</th>
-                                <td><input type="text" name="civilStatus" value="Single" disabled></td>
+                                <td><input type="text" name="civilStatus" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Height (cm)</th>
-                                <td><input type="number" name="height" value="170" disabled></td>
+                                <td><input type="number" name="height" value="" disabled></td>
                             </tr>
                             <tr>
                                 <th>Weight (kg)</th>
-                                <td><input type="number" name="weight" value="65" disabled></td>
+                                <td><input type="number" name="weight" value="" disabled></td>
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <td><input type="email" name="email" value="juan.santos@email.com" disabled></td>
+                                <td><input type="email" name="email" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Primary CP No.</th>
-                                <td><input type="text" name="cp" value="09171234567" disabled></td>
+                                <td><input type="text" name="cp" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Present Address</th>
-                                <td><input type="text" name="presentAddress" value="123 Main St, Quezon City" disabled></td>
+                                <td><input type="text" name="presentAddress" value="N/A" disabled></td>
                             </tr>
                             <tr>
                                 <th>Permanent Address</th>
-                                <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
+                                <td><input type="text" name="permanentAddress" value="N/A" disabled></td>
                             </tr>
-                        </table>                        </table>
+                        </table>
                         <div style="margin-top:1rem; text-align:center;">
                             <button id="save-profile-btn" class="dashboard-link save-btn" type="submit" style="display:none;">
                                 <span class="material-icons-sharp" style="vertical-align:middle;">save</span> Save
@@ -487,7 +487,8 @@ cropBtn.onclick = function() {
         });
         const dataUrl = canvas.toDataURL();
         picImg.src = dataUrl;
-        document.getElementById('profile-pic-hidden').value = dataUrl; // Save to hidden input
+        document.getElementById('profile-pic-input-hidden').value = dataUrl; // Save to hidden input
+        document.getElementById('profile-pic-input-hidden').value = dataUrl;
         cropper.destroy();
         cropperModal.style.display = 'none';
         picInput.value = ""; // reset input
@@ -535,21 +536,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const section = document.querySelector(link.getAttribute('href'));
     return section;
   });
-
-  function onScroll() {
-    let activeIndex = 0;
-    sections.forEach((section, i) => {
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 80) activeIndex = i;
-      }
-    });
-    sidebarLinks.forEach(link => link.classList.remove('active'));
-    if (sidebarLinks[activeIndex]) sidebarLinks[activeIndex].classList.add('active');
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // highlight on load
 });
 </script>
     <script>
@@ -641,28 +627,7 @@ form.onsubmit = async function(e) {
   cancelBtn.style.display = 'none';
   editBtn.style.display = '';
 };
-document.addEventListener('DOMContentLoaded', function() {
-  const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
-  const sections = Array.from(sidebarLinks).map(link => {
-    const section = document.querySelector(link.getAttribute('href'));
-    return section;
-  });
 
-  function onScroll() {
-    let activeIndex = 0;
-    sections.forEach((section, i) => {
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 80) activeIndex = i;
-      }
-    });
-    sidebarLinks.forEach(link => link.classList.remove('active'));
-    if (sidebarLinks[activeIndex]) sidebarLinks[activeIndex].classList.add('active');
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // highlight on load
-});
 </script>
 </body>
 </html>

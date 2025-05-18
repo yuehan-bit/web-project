@@ -1,665 +1,813 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Officer Dashboard - NROTC</title>
-    <link rel="stylesheet" href="../../css/dashboard1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
-</head>
-<body>
+    <link rel="stylesheet" href="../../css/dashboard1.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+    />
+  </head>
+  <body>
     <div class="container">
-        <!-- Sidebar -->
-        <aside>
-            <div class="toggle">
-                <div class="logo">
-                    <img src="../../img/Unit.jpg" alt="ROTC Logo">
-                    <h2>PLV NROTC</h2>
-                </div>
-                <div class="close" id="close-btn">
-                    <span class="material-icons-sharp">close</span>
-                </div>
-            </div>
-            <div class="sidebar">
-                <a href="../../index.html">
-                    <span class="material-icons-sharp">home</span>
-                    <h3>Home</h3>
-                </a>
-                <a href="#profile">
-                    <span class="material-icons-sharp">person</span>
-                    <h3>Profile</h3>
-                </a>
-                <a href="#schedule" class="active">
-                    <span class="material-icons-sharp">calendar_today</span>
-                    <h3>Schedule</h3>
-                </a>
-                <a href="#resource">
-                    <span class="material-icons-sharp">folder</span>
-                    <h3>Resources</h3>
-                </a>
-                <a href="#announcements">
-                    <span class="material-icons-sharp">notifications</span>
-                    <h3>Updates</h3>
-                </a>
-                <a href="#uploads">
-                    <span class="material-icons-sharp">upload_file</span>
-                    <h3>Upload</h3>
-                </a>
-                <a href="#search">
-                    <span class="material-icons-sharp">search</span>
-                    <h3>Search</h3>
-                </a>
-                <a href="#reports">
-                    <span class="material-icons-sharp">assessment</span>
-                    <h3>Reports</h3>
-                </a>
-                <a href="#tools">
-                    <span class="material-icons-sharp">admin_panel_settings</span>
-                    <h3>Admin</h3>
-                </a>
-                <a onclick="logout()">
-                    <span class="material-icons-sharp">logout</span>
-                    <h3>Sign Out</h3>
-                </a>
-            </div>
-        </aside>
-        
-        <!-- Main Content -->
-        <main>
-            <h1>Officer Dashboard</h1>
-            <div class="dashboard-welcome card">
-                <h2>Welcome, <span id="officer-name">Officer Reyes</span>!</h2>
-                <p>Manage schedules, and resources efficiently.</p>
-            </div>
-            <!-- Top Stats Cards -->
-            <div class="dashboard-cards">
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">schedule</span>
-                    <h3>Training Hours</h3>
-                    <p class="card-value">42.5</p>
-                    <p class="card-desc">Total hours this month</p>
-                </div>
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">star</span>
-                    <h3>Leadership Score</h3>
-                    <p class="card-value">92</p>
-                    <p class="card-desc">Your current score</p>
-                </div>
-                <div class="dashboard-card">
-                    <span class="material-icons-sharp card-icon">fitness_center</span>
-                    <h3>Physical Fitness</h3>
-                    <p class="card-value">245</p>
-                    <p class="card-desc">Fitness points</p>
-                </div>
-            </div>
-            <!-- Upcoming Events -->
-            <section id="schedule" class="dashboard-section">
-                <h2>Schedule</h2>
-                <ul class="schedule-list">
-                    <li>
-                        <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
-                    </li>
-                    <li>
-                        <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00, Lecture Hall A
-                    </li>
-                    <li>
-                        <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill Field
-                    </li>
-                    <li>
-                        <strong>May 28, 2025:</strong> Uniform Inspection – 09:00-11:00, HQ
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Resources Section -->
-            <section id="resource" class="dashboard-section">
-                <h2>Resources</h2>
-                <ul class="resource-list" id="resource-list"></ul>
-            </section>
-
-            <!-- Updates/Announcements Section -->
-            <section id="announcements" class="dashboard-section">
-                <h2>Updates</h2>
-                <ul class="updates-list">
-                    <li>
-                        <span class="material-icons-sharp">campaign</span>
-                        <strong>May 18:</strong> Parade uniform inspection moved to May 28.
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">campaign</span>
-                        <strong>May 15:</strong> New training materials uploaded in Resources.
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">campaign</span>
-                        <strong>May 10:</strong> Congratulations to Cadet Santos for top PT score!
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Upload Section -->
-            <section id="uploads" class="dashboard-section">
-                <h2>Upload a File</h2>
-                <form id="upload-form" class="upload-form" enctype="multipart/form-data">
-                    <label for="upload-file" class="upload-label">
-                        <span class="material-icons-sharp" style="font-size:2rem;vertical-align:middle;">cloud_upload</span>
-                        <span id="file-label-text">Choose a file or drag it here</span>
-                        <input type="file" id="upload-file" name="upload-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png" required hidden>
-                    </label>
-                    <button type="submit" class="dashboard-link">Upload</button>
-                </form>
-                <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
-                <p id="upload-status"></p>
-            </section>
-
-            <!-- Search Section -->
-            <section id="search" class="dashboard-section">
-                <h2>Search</h2>
-                <form class="search-form">
-                    <input type="text" placeholder="Search cadets, instructors, or resources..." />
-                    <button type="submit" class="dashboard-link">Search</button>
-                </form>
-                <div class="search-results">
-                    <ul>
-                        <li>
-                            <span class="material-icons-sharp">person</span>
-                            Cadet Maria Santos – 2nd Year, Marine Option
-                        </li>
-                        <li>
-                            <span class="material-icons-sharp">folder</span>
-                            Training Manual (PDF)
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Reports Section -->
-            <section id="reports" class="dashboard-section">
-                <h2>Reports</h2>
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>Cadet</th>
-                            <th>Attendance</th>
-                            <th>PT Score</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Maria Santos</td>
-                            <td>98%</td>
-                            <td>92</td>
-                            <td>Excellent</td>
-                        </tr>
-                        <tr>
-                            <td>Juan Dela Cruz</td>
-                            <td>95%</td>
-                            <td>88</td>
-                            <td>Good</td>
-                        </tr>
-                        <tr>
-                            <td>Jose Rizal</td>
-                            <td>100%</td>
-                            <td>95</td>
-                            <td>Outstanding</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Admin Section -->
-            <section id="tools" class="dashboard-section">
-                <h2>Admin</h2>
-                <ul class="admin-tools-list">
-                    <li>
-                        <span class="material-icons-sharp">person_add</span>
-                        <a href="#">Add New Cadet</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">edit</span>
-                        <a href="#">Edit Instructor Profiles</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">settings</span>
-                        <a href="#">System Settings</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">backup</span>
-                        <a href="#">Backup Data</a>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Contact Messages Section -->
-            <section id="contact-messages" class="dashboard-section">
-                <h2>Contact Messages</h2>
-                <ul id="messages-list"></ul>
-            </section>
-        </main>
-        
-        <!-- Right Section for Profile and Reminders -->
-        <div class="right-section">
-            <!-- Profile Card -->
-            <div class="profile-section">
-                <img src="../../img/Unit.jpg" alt="Profile Picture">
-                <h2><p id="welcome-message">Officer</p></h2>
-                <p>3rd Year Midshipman</p>
-                <p>Marine Option</p>
-            </div>
-            <!-- Profile Section -->
-            <div class="profile-section">
-                <h2>Reservist Information</h2>
-                <button id="edit-profile-btn" class="dashboard-link" type="button">Edit</button>
-                <div class="profile-table-wrapper">
-                    <form id="profile-form">
-                        <table class="profile-table">
-                            <tr>
-                                <th>Personnel Classification</th>
-                                <td><input type="text" name="classification" value="Ready Reserve" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Rank</th>
-                                <td><input type="text" name="rank" value="LTJG" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>First Name</th>
-                                <td><input type="text" name="firstName" value="Juan" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Middle Name</th>
-                                <td><input type="text" name="middleName" value="Dela Cruz" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Last Name</th>
-                                <td><input type="text" name="lastName" value="Santos" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Ext</th>
-                                <td><input type="text" name="ext" value="Jr." disabled></td>
-                            </tr>
-                            <tr>
-                                <th>AFPSN</th>
-                                <td><input type="text" name="afpsn" value="123456789" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>BOS</th>
-                                <td><input type="text" name="bos" value="NAVY" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Classification</th>
-                                <td><input type="text" name="class" value="Officer" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Mob Cen</th>
-                                <td><input type="text" name="mobcen" value="Manila" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Source of Commission</th>
-                                <td><input type="text" name="source" value="ROTC" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Commission Category</th>
-                                <td><input type="text" name="commissionCategory" value="Regular" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Birthday</th>
-                                <td><input type="date" name="birthday" value="1990-01-01" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Birthplace</th>
-                                <td><input type="text" name="birthplace" value="Quezon City" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Sex</th>
-                                <td><input type="text" name="sex" value="Male" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Civil Status</th>
-                                <td><input type="text" name="civilStatus" value="Single" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Height (cm)</th>
-                                <td><input type="number" name="height" value="170" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Weight (kg)</th>
-                                <td><input type="number" name="weight" value="65" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td><input type="email" name="email" value="juan.santos@email.com" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Primary CP No.</th>
-                                <td><input type="text" name="cp" value="09171234567" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Present Address</th>
-                                <td><input type="text" name="presentAddress" value="123 Main St, Quezon City" disabled></td>
-                            </tr>
-                            <tr>
-                                <th>Permanent Address</th>
-                                <td><input type="text" name="permanentAddress" value="456 Home St, Manila" disabled></td>
-                            </tr>
-                        </table>
-                        <button id="save-profile-btn" class="dashboard-link" type="submit" style="display:none;">Save</button>
-                        <button id="cancel-profile-btn" class="dashboard-link" type="button" style="display:none;">Cancel</button>
-                    </form>
-                </div>
-            </div>
+      <!-- Sidebar -->
+      <aside>
+        <div class="toggle">
+          <div class="logo">
+            <img src="../../img/Unit.jpg" alt="ROTC Logo" />
+            <h2>PLV NROTC</h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp">close</span>
+          </div>
         </div>
+        <div class="sidebar">
+          <a href="../../index.html">
+            <span class="material-icons-sharp">home</span>
+            <h3>Home</h3>
+          </a>
+          <a href="#profile">
+            <span class="material-icons-sharp">person</span>
+            <h3>Profile</h3>
+          </a>
+          <a href="#schedule" class="active">
+            <span class="material-icons-sharp">calendar_today</span>
+            <h3>Schedule</h3>
+          </a>
+          <a href="#resource">
+            <span class="material-icons-sharp">folder</span>
+            <h3>Resources</h3>
+          </a>
+          <a href="#announcements">
+            <span class="material-icons-sharp">notifications</span>
+            <h3>Updates</h3>
+          </a>
+          <a href="#uploads">
+            <span class="material-icons-sharp">upload_file</span>
+            <h3>Upload</h3>
+          </a>
+          <a href="#search">
+            <span class="material-icons-sharp">search</span>
+            <h3>Search</h3>
+          </a>
+          <a href="#reports">
+            <span class="material-icons-sharp">assessment</span>
+            <h3>Reports</h3>
+          </a>
+          <a href="#tools">
+            <span class="material-icons-sharp">admin_panel_settings</span>
+            <h3>Admin</h3>
+          </a>
+          <a onclick="logout()">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Sign Out</h3>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <h1>Officer Dashboard</h1>
+        <div class="dashboard-welcome card">
+          <h2>Welcome, <span id="officer-name">Officer Reyes</span>!</h2>
+          <p>Manage schedules, and resources efficiently.</p>
+        </div>
+        <!-- Top Stats Cards -->
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <span class="material-icons-sharp card-icon">schedule</span>
+            <h3>Training Hours</h3>
+            <p class="card-value">42.5</p>
+            <p class="card-desc">Total hours this month</p>
+          </div>
+          <div class="dashboard-card">
+            <span class="material-icons-sharp card-icon">star</span>
+            <h3>Leadership Score</h3>
+            <p class="card-value">92</p>
+            <p class="card-desc">Your current score</p>
+          </div>
+          <div class="dashboard-card">
+            <span class="material-icons-sharp card-icon">fitness_center</span>
+            <h3>Physical Fitness</h3>
+            <p class="card-value">245</p>
+            <p class="card-desc">Fitness points</p>
+          </div>
+        </div>
+        <!-- Upcoming Events -->
+        <section id="schedule" class="dashboard-section">
+          <h2>Schedule</h2>
+          <ul class="schedule-list">
+            <li>
+              <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00,
+              Parade Grounds
+            </li>
+            <li>
+              <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00,
+              Lecture Hall A
+            </li>
+            <li>
+              <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill
+              Field
+            </li>
+            <li>
+              <strong>May 28, 2025:</strong> Uniform Inspection – 09:00-11:00,
+              HQ
+            </li>
+          </ul>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resource" class="dashboard-section">
+          <h2>Resources</h2>
+          <ul class="resource-list" id="resource-list"></ul>
+        </section>
+
+        <!-- Updates/Announcements Section -->
+        <section id="announcements" class="dashboard-section">
+          <h2>Updates</h2>
+          <ul class="updates-list">
+            <li>
+              <span class="material-icons-sharp">campaign</span>
+              <strong>May 18:</strong> Parade uniform inspection moved to May
+              28.
+            </li>
+            <li>
+              <span class="material-icons-sharp">campaign</span>
+              <strong>May 15:</strong> New training materials uploaded in
+              Resources.
+            </li>
+            <li>
+              <span class="material-icons-sharp">campaign</span>
+              <strong>May 10:</strong> Congratulations to Cadet Santos for top
+              PT score!
+            </li>
+          </ul>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="uploads" class="dashboard-section">
+          <h2>Upload a File</h2>
+          <form
+            id="upload-form"
+            class="upload-form"
+            enctype="multipart/form-data"
+          >
+            <label for="upload-file" class="upload-label">
+              <span
+                class="material-icons-sharp"
+                style="font-size: 2rem; vertical-align: middle"
+                >cloud_upload</span
+              >
+              <span id="file-label-text">Choose a file or drag it here</span>
+              <input
+                type="file"
+                id="upload-file"
+                name="upload-file"
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png"
+                required
+                hidden
+              />
+            </label>
+            <button type="submit" class="dashboard-link">Upload</button>
+          </form>
+          <p class="text-muted">Accepted formats: PDF, DOC, PPT, JPG, PNG</p>
+          <p id="upload-status"></p>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="dashboard-section">
+          <h2>Search</h2>
+          <form class="search-form">
+            <input
+              type="text"
+              placeholder="Search cadets, instructors, or resources..."
+            />
+            <button type="submit" class="dashboard-link">Search</button>
+          </form>
+          <div class="search-results">
+            <ul>
+              <li>
+                <span class="material-icons-sharp">person</span>
+                Cadet Maria Santos – 2nd Year, Marine Option
+              </li>
+              <li>
+                <span class="material-icons-sharp">folder</span>
+                Training Manual (PDF)
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="dashboard-section">
+          <h2>Reports</h2>
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Cadet</th>
+                <th>Attendance</th>
+                <th>PT Score</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Maria Santos</td>
+                <td>98%</td>
+                <td>92</td>
+                <td>Excellent</td>
+              </tr>
+              <tr>
+                <td>Juan Dela Cruz</td>
+                <td>95%</td>
+                <td>88</td>
+                <td>Good</td>
+              </tr>
+              <tr>
+                <td>Jose Rizal</td>
+                <td>100%</td>
+                <td>95</td>
+                <td>Outstanding</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="tools" class="dashboard-section">
+          <h2>Admin</h2>
+          <ul class="admin-tools-list">
+            <li>
+              <span class="material-icons-sharp">person_add</span>
+              <a href="#">Add New Cadet</a>
+            </li>
+            <li>
+              <span class="material-icons-sharp">edit</span>
+              <a href="#">Edit Instructor Profiles</a>
+            </li>
+            <li>
+              <span class="material-icons-sharp">settings</span>
+              <a href="#">System Settings</a>
+            </li>
+            <li>
+              <span class="material-icons-sharp">backup</span>
+              <a href="#">Backup Data</a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Contact Messages Section -->
+        <section id="contact-messages" class="dashboard-section">
+          <h2>Contact Messages</h2>
+          <ul id="messages-list"></ul>
+        </section>
+      </main>
+
+      <!-- Right Section for Profile and Reminders -->
+      <div class="right-section">
+        <!-- Profile Card -->
+        <div class="profile-section">
+          <img src="../../img/Unit.jpg" alt="Profile Picture" />
+          <h2><p id="welcome-message">Officer</p></h2>
+          <p>3rd Year Midshipman</p>
+          <p>Marine Option</p>
+        </div>
+        <!-- Profile Section -->
+        <div class="profile-section">
+          <h2>Reservist Information</h2>
+          <button id="edit-profile-btn" class="dashboard-link" type="button">
+            Edit
+          </button>
+          <div class="profile-table-wrapper">
+            <form id="profile-form">
+              <table class="profile-table">
+                <tr>
+                  <th>Personnel Classification</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="classification"
+                      value="Ready Reserve"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Rank</th>
+                  <td>
+                    <input type="text" name="rank" value="LTJG" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>First Name</th>
+                  <td>
+                    <input type="text" name="firstName" value="Juan" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Middle Name</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="middleName"
+                      value="Dela Cruz"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Last Name</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value="Santos"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Ext</th>
+                  <td><input type="text" name="ext" value="Jr." disabled /></td>
+                </tr>
+                <tr>
+                  <th>AFPSN</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="afpsn"
+                      value="123456789"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>BOS</th>
+                  <td>
+                    <input type="text" name="bos" value="NAVY" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Classification</th>
+                  <td>
+                    <input type="text" name="class" value="Officer" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Mob Cen</th>
+                  <td>
+                    <input type="text" name="mobcen" value="Manila" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Source of Commission</th>
+                  <td>
+                    <input type="text" name="source" value="ROTC" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Commission Category</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="commissionCategory"
+                      value="Regular"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Birthday</th>
+                  <td>
+                    <input
+                      type="date"
+                      name="birthday"
+                      value="1990-01-01"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Birthplace</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="birthplace"
+                      value="Quezon City"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Sex</th>
+                  <td>
+                    <input type="text" name="sex" value="Male" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Civil Status</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="civilStatus"
+                      value="Single"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Height (cm)</th>
+                  <td>
+                    <input type="number" name="height" value="170" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Weight (kg)</th>
+                  <td>
+                    <input type="number" name="weight" value="65" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>
+                    <input
+                      type="email"
+                      name="email"
+                      value="juan.santos@email.com"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Primary CP No.</th>
+                  <td>
+                    <input type="text" name="cp" value="09171234567" disabled />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Present Address</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="presentAddress"
+                      value="123 Main St, Quezon City"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Permanent Address</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="permanentAddress"
+                      value="456 Home St, Manila"
+                      disabled
+                    />
+                  </td>
+                </tr>
+              </table>
+              <button
+                id="save-profile-btn"
+                class="dashboard-link"
+                type="submit"
+                style="display: none"
+              >
+                Save
+              </button>
+              <button
+                id="cancel-profile-btn"
+                class="dashboard-link"
+                type="button"
+                style="display: none"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-navbar">
-        <a href="../../index.html" class="active">
-            <span class="material-icons-sharp">home</span>
-        </a>
-        <a href="profile/profile.html">
-            <span class="material-icons-sharp">person</span>
-        </a>
-        <a href="training-schedule/training-schedule.html">
-            <span class="material-icons-sharp">calendar_today</span>
-        </a>
-        <a href="resources/resources.html">
-            <span class="material-icons-sharp">folder</span>
-        </a>
-        <a href="announcements/updates.html">
-            <span class="material-icons-sharp">notifications</span>
-        </a>
+      <a href="../../index.html" class="active">
+        <span class="material-icons-sharp">home</span>
+      </a>
+      <a href="profile/profile.html">
+        <span class="material-icons-sharp">person</span>
+      </a>
+      <a href="training-schedule/training-schedule.html">
+        <span class="material-icons-sharp">calendar_today</span>
+      </a>
+      <a href="resources/resources.html">
+        <span class="material-icons-sharp">folder</span>
+      </a>
+      <a href="announcements/updates.html">
+        <span class="material-icons-sharp">notifications</span>
+      </a>
     </nav>
-    
+
     <style>
-.upload-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1em;
-  margin-bottom: 1em;
-}
-.upload-label {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  background: #f5f7fa;
-  border: 2px dashed #1976d2;
-  border-radius: 8px;
-  padding: 1em 2em;
-  cursor: pointer;
-  transition: background 0.2s, border 0.2s;
-  width: 100%;
-  max-width: 400px;
-}
-.upload-label.dragover {
-  background: #e3f2fd;
-  border-color: #1565c0;
-}
-.upload-label span {
-  pointer-events: none;
-}
-.dashboard-link {
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  padding: 0.5em 2em;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-.dashboard-link:hover {
-  background: #1565c0;
-}
-.text-muted {
-  color: #888;
-  font-size: 0.95em;
-}
-#upload-status {
-  font-weight: 500;
-  margin-top: 0.5em;
-}
-</style>
+      .upload-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
+        margin-bottom: 1em;
+      }
+      .upload-label {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        background: #f5f7fa;
+        border: 2px dashed #1976d2;
+        border-radius: 8px;
+        padding: 1em 2em;
+        cursor: pointer;
+        transition: background 0.2s, border 0.2s;
+        width: 100%;
+        max-width: 400px;
+      }
+      .upload-label.dragover {
+        background: #e3f2fd;
+        border-color: #1565c0;
+      }
+      .upload-label span {
+        pointer-events: none;
+      }
+      .dashboard-link {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        padding: 0.5em 2em;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .dashboard-link:hover {
+        background: #1565c0;
+      }
+      .text-muted {
+        color: #888;
+        font-size: 0.95em;
+      }
+      #upload-status {
+        font-weight: 500;
+        margin-top: 0.5em;
+      }
+    </style>
 
     <script>
-        // Logout Function
-        function logout() {
-            alert('Logging out...');
-            window.location.href = '../../index.html';
-        }
+      // Logout Function
+      function logout() {
+        alert("Logging out...");
+        window.location.href = "../../index.html";
+      }
 
-        // Profile Edit/Save/Cancel Logic
-        document.addEventListener('DOMContentLoaded', function() {
-            const editBtn = document.getElementById('edit-profile-btn');
-            const saveBtn = document.getElementById('save-profile-btn');
-            const cancelBtn = document.getElementById('cancel-profile-btn');
-            const form = document.getElementById('profile-form');
-            const inputs = form.querySelectorAll('input');
+      // Profile Edit/Save/Cancel Logic
+      document.addEventListener("DOMContentLoaded", function () {
+        const editBtn = document.getElementById("edit-profile-btn");
+        const saveBtn = document.getElementById("save-profile-btn");
+        const cancelBtn = document.getElementById("cancel-profile-btn");
+        const form = document.getElementById("profile-form");
+        const inputs = form.querySelectorAll("input");
 
-            let originalValues = {};
+        let originalValues = {};
 
-            editBtn.addEventListener('click', () => {
-                inputs.forEach(input => {
-                    originalValues[input.name] = input.value;
-                    input.disabled = false;
-                });
-                saveBtn.style.display = '';
-                cancelBtn.style.display = '';
-                editBtn.style.display = 'none';
-            });
-
-            cancelBtn.addEventListener('click', () => {
-                inputs.forEach(input => {
-                    input.value = originalValues[input.name];
-                    input.disabled = true;
-                });
-                saveBtn.style.display = 'none';
-                cancelBtn.style.display = 'none';
-                editBtn.style.display = '';
-            });
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                inputs.forEach(input => input.disabled = true);
-                saveBtn.style.display = 'none';
-                cancelBtn.style.display = 'none';
-                editBtn.style.display = '';
-                alert('Profile updated!');
-            });
-
-            // Upload Section Logic
-            const uploadForm = document.getElementById('upload-form');
-            const fileInput = document.getElementById('upload-file');
-            const label = document.querySelector('.upload-label');
-            const labelText = document.getElementById('file-label-text');
-            const status = document.getElementById('upload-status');
-
-            // Show selected file name
-            fileInput.addEventListener('change', function() {
-                if (fileInput.files.length) {
-                    labelText.textContent = fileInput.files[0].name;
-                } else {
-                    labelText.textContent = 'Choose a file or drag it here';
-                }
-            });
-
-            // Drag and drop support
-            label.addEventListener('dragover', e => {
-                e.preventDefault();
-                label.classList.add('dragover');
-            });
-            label.addEventListener('dragleave', e => {
-                e.preventDefault();
-                label.classList.remove('dragover');
-            });
-            label.addEventListener('drop', e => {
-                e.preventDefault();
-                label.classList.remove('dragover');
-                if (e.dataTransfer.files.length) {
-                    fileInput.files = e.dataTransfer.files;
-                    labelText.textContent = fileInput.files[0].name;
-                }
-            });
-
-            // Upload handler
-            uploadForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                if (!fileInput.files.length) {
-                    status.textContent = "Please select a file.";
-                    return;
-                }
-                status.textContent = "Uploading...";
-                const formData = new FormData(uploadForm);
-                fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(data => {
-                    status.textContent = data.message || 'Upload complete!';
-                    fileInput.value = '';
-                    labelText.textContent = 'Choose a file or drag it here';
-                    if (typeof loadResources === 'function') loadResources();
-                })
-                .catch(() => {
-                    status.textContent = 'Upload failed.';
-                });
-            });
+        editBtn.addEventListener("click", () => {
+          inputs.forEach((input) => {
+            originalValues[input.name] = input.value;
+            input.disabled = false;
+          });
+          saveBtn.style.display = "";
+          cancelBtn.style.display = "";
+          editBtn.style.display = "none";
         });
 
-        // Resources Section Logic
-        async function loadResources() {
-            const res = await fetch('/api/resources');
-            const files = await res.json();
-            const list = document.getElementById('resource-list');
-            list.innerHTML = '';
-            if (Array.isArray(files) && files.length > 0) {
-                files.forEach(file => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
+        cancelBtn.addEventListener("click", () => {
+          inputs.forEach((input) => {
+            input.value = originalValues[input.name];
+            input.disabled = true;
+          });
+          saveBtn.style.display = "none";
+          cancelBtn.style.display = "none";
+          editBtn.style.display = "";
+        });
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          inputs.forEach((input) => (input.disabled = true));
+          saveBtn.style.display = "none";
+          cancelBtn.style.display = "none";
+          editBtn.style.display = "";
+          alert("Profile updated!");
+        });
+
+        // Upload Section Logic
+        const uploadForm = document.getElementById("upload-form");
+        const fileInput = document.getElementById("upload-file");
+        const label = document.querySelector(".upload-label");
+        const labelText = document.getElementById("file-label-text");
+        const status = document.getElementById("upload-status");
+
+        // Show selected file name
+        fileInput.addEventListener("change", function () {
+          if (fileInput.files.length) {
+            labelText.textContent = fileInput.files[0].name;
+          } else {
+            labelText.textContent = "Choose a file or drag it here";
+          }
+        });
+
+        // Drag and drop support
+        label.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          label.classList.add("dragover");
+        });
+        label.addEventListener("dragleave", (e) => {
+          e.preventDefault();
+          label.classList.remove("dragover");
+        });
+        label.addEventListener("drop", (e) => {
+          e.preventDefault();
+          label.classList.remove("dragover");
+          if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            labelText.textContent = fileInput.files[0].name;
+          }
+        });
+
+        // Upload handler
+        uploadForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!fileInput.files.length) {
+            status.textContent = "Please select a file.";
+            return;
+          }
+          status.textContent = "Uploading...";
+          const formData = new FormData(uploadForm);
+          fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              status.textContent = data.message || "Upload complete!";
+              fileInput.value = "";
+              labelText.textContent = "Choose a file or drag it here";
+              if (typeof loadResources === "function") loadResources();
+            })
+            .catch(() => {
+              status.textContent = "Upload failed.";
+            });
+        });
+      });
+
+      // Resources Section Logic
+      async function loadResources() {
+        const res = await fetch("/api/resources");
+        const files = await res.json();
+        const list = document.getElementById("resource-list");
+        list.innerHTML = "";
+        if (Array.isArray(files) && files.length > 0) {
+          files.forEach((file) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
                         <a href="/api/download/${file.filename}">
                             <span class="material-icons-sharp">download</span>
                             ${file.originalname}
                         </a>
                     `;
-                    list.appendChild(li);
-                });
-            } else {
-                list.innerHTML = '<li>No resources found.</li>';
-            }
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>No resources found.</li>";
         }
-        document.addEventListener('DOMContentLoaded', loadResources);
+      }
+      document.addEventListener("DOMContentLoaded", loadResources);
     </script>
     <script src="../../js/logged-in.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
-  const sections = Array.from(sidebarLinks).map(link => {
-    const section = document.querySelector(link.getAttribute('href'));
-    return section;
-  });
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+        const sections = Array.from(sidebarLinks).map((link) => {
+          const section = document.querySelector(link.getAttribute("href"));
+          return section;
+        });
 
-  function onScroll() {
-    let activeIndex = 0;
-    sections.forEach((section, i) => {
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 80) activeIndex = i;
-      }
-    });
-    sidebarLinks.forEach(link => link.classList.remove('active'));
-    if (sidebarLinks[activeIndex]) sidebarLinks[activeIndex].classList.add('active');
-  }
+        function onScroll() {
+          let activeIndex = 0;
+          sections.forEach((section, i) => {
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              if (rect.top <= 80) activeIndex = i;
+            }
+          });
+          sidebarLinks.forEach((link) => link.classList.remove("active"));
+          if (sidebarLinks[activeIndex])
+            sidebarLinks[activeIndex].classList.add("active");
+        }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // highlight on load
-});
-</script>
-<script>
-async function loadContactMessages() {
-  const res = await fetch('/api/contact/messages');
-  const messages = await res.json();
-  const list = document.getElementById('messages-list');
-  list.innerHTML = '';
-  if (Array.isArray(messages) && messages.length > 0) {
-    messages.forEach(msg => {
-      const li = document.createElement('li');
-      li.innerHTML = `<strong>${msg.name}</strong> (${msg.course})<br>
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll(); // highlight on load
+      });
+    </script>
+    <script>
+      async function loadContactMessages() {
+        const res = await fetch("/api/contact/messages");
+        const messages = await res.json();
+        const list = document.getElementById("messages-list");
+        list.innerHTML = "";
+        if (Array.isArray(messages) && messages.length > 0) {
+          messages.forEach((msg) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${msg.name}</strong> (${msg.course})<br>
         <em>${new Date(msg.date).toLocaleString()}</em><br>
         ${msg.message}`;
-      list.appendChild(li);
-    });
-  } else {
-    list.innerHTML = '<li>No messages yet.</li>';
-  }
-}
-document.addEventListener('DOMContentLoaded', loadContactMessages);
-</script>
-<script>
-const username = sessionStorage.getItem("username");
-const form = document.getElementById('profile-form');
-const inputs = form.querySelectorAll('input');
-const editBtn = document.getElementById('edit-profile-btn');
-const saveBtn = document.getElementById('save-profile-btn');
-const cancelBtn = document.getElementById('cancel-profile-btn');
-let originalValues = {};
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>No messages yet.</li>";
+        }
+      }
+      document.addEventListener("DOMContentLoaded", loadContactMessages);
+    </script>
+    <script>
+      const username = sessionStorage.getItem("username");
+      const form = document.getElementById("profile-form");
+      const inputs = form.querySelectorAll("input");
+      const editBtn = document.getElementById("edit-profile-btn");
+      const saveBtn = document.getElementById("save-profile-btn");
+      const cancelBtn = document.getElementById("cancel-profile-btn");
+      let originalValues = {};
 
-// Load profile data
-async function loadProfile() {
-  const res = await fetch(`/api/profile/${username}`);
-  const data = await res.json();
-  if (data) {
-    for (const [key, value] of Object.entries(data)) {
-      const input = form.querySelector(`[name="${key}"]`);
-      if (input) input.value = value;
-    }
-  }
-  // Disable all fields by default
-  inputs.forEach(input => input.disabled = true);
-  saveBtn.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  editBtn.style.display = '';
-}
-document.addEventListener('DOMContentLoaded', loadProfile);
+      // Load profile data
+      async function loadProfile() {
+        const res = await fetch(`/api/profile/${username}`);
+        const data = await res.json();
+        if (data) {
+          for (const [key, value] of Object.entries(data)) {
+            const input = form.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+          }
+        }
+        // Disable all fields by default
+        inputs.forEach((input) => (input.disabled = true));
+        saveBtn.style.display = "none";
+        cancelBtn.style.display = "none";
+        editBtn.style.display = "";
+      }
+      document.addEventListener("DOMContentLoaded", loadProfile);
 
-editBtn.onclick = function() {
-  inputs.forEach(input => {
-    originalValues[input.name] = input.value;
-    input.disabled = false;
-  });
-  saveBtn.style.display = '';
-  cancelBtn.style.display = '';
-  editBtn.style.display = 'none';
-};
+      editBtn.onclick = function () {
+        inputs.forEach((input) => {
+          originalValues[input.name] = input.value;
+          input.disabled = false;
+        });
+        saveBtn.style.display = "";
+        cancelBtn.style.display = "";
+        editBtn.style.display = "none";
+      };
 
-cancelBtn.onclick = function() {
-  inputs.forEach(input => {
-    input.value = originalValues[input.name];
-    input.disabled = true;
-  });
-  saveBtn.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  editBtn.style.display = '';
-};
+      cancelBtn.onclick = function () {
+        inputs.forEach((input) => {
+          input.value = originalValues[input.name];
+          input.disabled = true;
+        });
+        saveBtn.style.display = "none";
+        cancelBtn.style.display = "none";
+        editBtn.style.display = "";
+      };
 
-form.onsubmit = async function(e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const data = {};
-  formData.forEach((value, key) => data[key] = value);
-  await fetch(`/api/profile/${username}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  alert('Profile updated!');
-  // After saving, disable fields and toggle buttons
-  inputs.forEach(input => input.disabled = true);
-  saveBtn.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  editBtn.style.display = '';
-};
-</script>
-</body>
+      form.onsubmit = async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => (data[key] = value));
+        await fetch(`/api/profile/${username}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        alert("Profile updated!");
+        // After saving, disable fields and toggle buttons
+        inputs.forEach((input) => (input.disabled = true));
+        saveBtn.style.display = "none";
+        cancelBtn.style.display = "none";
+        editBtn.style.display = "";
+      };
+    </script>
+  </body>
 </html>

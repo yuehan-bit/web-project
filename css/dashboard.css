@@ -1,421 +1,422 @@
 /* General Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden; /* Prevent horizontal overflow */
+html,
+body {
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    background: #f4f4f9;
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f9;
 }
 
 /* Header */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #333;
-    color: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #333;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between logo and text */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between logo and text */
 }
 
 .logo img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .logo-container {
-    display: flex;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 /* Dropdown Styling */
 .logo-toggle {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .nav-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .nav-title {
-    font-weight: bold;
-    font-size: 1rem;
-    color: #fff;
-    white-space: nowrap;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+  white-space: nowrap;
 }
 
 .school-name {
-    text-decoration:none;
-    font-size: 1.1rem;
-    color: #fff;
-    line-height: 1.2;
-    font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: bold;
 }
 
 /* NAV STYLING */
 nav {
-    background-color: #333;
-    padding: 0.5rem 1rem;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background-color: #333;
+  padding: 0.5rem 1rem;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
 }
 
 /* Navigation Links */
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .nav-links li {
-    position: relative;
+  position: relative;
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 .nav-links a:hover {
-    background-color: #555;
-    color: #f4d03f;
+  background-color: #555;
+  color: #f4d03f;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
+  list-style: none;
+  display: flex;
+  gap: 15px;
 }
 
 nav ul li {
-    position: relative;
+  position: relative;
 }
 
 nav ul li a {
-    display: block;
-    padding: 8px 12px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-    border-radius: 5px;
+  display: block;
+  padding: 8px 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
 }
 
 nav ul li:hover {
-    background-color: #444; /* Slightly lighter background on hover */
-    transition: background-color 0.3s ease;
+  background-color: #444; /* Slightly lighter background on hover */
+  transition: background-color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #f4d03f; /* Highlighted color on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+  color: #f4d03f; /* Highlighted color on hover */
+  transform: scale(1.05); /* Slight zoom effect */
 }
 
 /* Sidebar Styles */
 .dashboard-container {
-    display: flex;
-    height: calc(100vh - 60px); /* Full height minus header */
+  display: flex;
+  height: calc(100vh - 60px); /* Full height minus header */
 }
 
 .dashboard-sidebar {
-    width: 250px;
-    background: #333;
-    color: #fff;
-    padding: 1rem;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-sidebar h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .dashboard-sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .dashboard-sidebar ul li {
-    margin: 1rem 0;
+  margin: 1rem 0;
 }
 
 .dashboard-sidebar ul li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.1rem;
-    display: block;
-    padding: 0.5rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.1rem;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .dashboard-sidebar ul li a:hover {
-    background: #444;
+  background: #444;
 }
 
 /* Main Section Styles */
 .dashboard-main {
-    flex: 1;
-    padding: 2rem;
-    background: url('../img/Cover.jpg') no-repeat center center/cover;
-    overflow-y: auto;
+  flex: 1;
+  padding: 2rem;
+  background: url("../img/Cover.jpg") no-repeat center center/cover;
+  overflow-y: auto;
 }
 
 .dashboard-hero {
-    text-align: center;
+  text-align: center;
 }
 
 .dashboard-hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: white;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
 }
 
 .dashboard-hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: white;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: white;
 }
 
 /* Footer Styles */
 footer {
-    text-align: center;
-    padding: 1rem 0;
-    background: #333;
-    color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  background: #333;
+  color: #fff;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .dashboard-sidebar {
-        width: 200px;
-    }
+  .dashboard-sidebar {
+    width: 200px;
+  }
 
-    .dashboard-sidebar ul li a {
-        font-size: 1rem;
-    }
+  .dashboard-sidebar ul li a {
+    font-size: 1rem;
+  }
 
-    .dashboard-hero h1 {
-        font-size: 1.8rem;
-    }
+  .dashboard-hero h1 {
+    font-size: 1.8rem;
+  }
 
-    .dashboard-hero p {
-        font-size: 1rem;
-    }
+  .dashboard-hero p {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .dashboard-container {
-        flex-direction: column;
-    }
+  .dashboard-container {
+    flex-direction: column;
+  }
 
-    .dashboard-sidebar {
-        width: 100%;
-        text-align: center;
-        padding: 1rem 0;
-    }
+  .dashboard-sidebar {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
 
-    .dashboard-main {
-        padding: 1rem;
-    }
+  .dashboard-main {
+    padding: 1rem;
+  }
 
-    .dashboard-hero h1 {
-        font-size: 1.5rem;
-    }
+  .dashboard-hero h1 {
+    font-size: 1.5rem;
+  }
 
-    .dashboard-hero p {
-        font-size: 0.9rem;
-    }
+  .dashboard-hero p {
+    font-size: 0.9rem;
+  }
 }
 
 /* Logo Dropdown Container */
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-sidebar {
-    display: none;
-    position: absolute;
-    top: 120%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    min-width: 180px;
-    z-index: 100;
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+  z-index: 100;
 }
 
 /* Each Link in the Dropdown */
 .dropdown-sidebar li {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .dropdown-sidebar a {
-    display: block;
-    padding: 10px 16px;
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
+  display: block;
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .dropdown-sidebar a:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 /* Show dropdown when active */
 .dropdown.active .dropdown-sidebar {
-    display: block;
+  display: block;
 }
 
 @media (max-width: 1024px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-    }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
 
-    .dashboard-main {
-        padding: 1.5rem;
-    }
+  .dashboard-main {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .dashboard-container {
-        flex-direction: column;
-    }
+  .dashboard-container {
+    flex-direction: column;
+  }
 
-    .dashboard-sidebar {
-        width: 100%;
-        padding: 1rem;
-        text-align: center;
-    }
+  .dashboard-sidebar {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+  }
 
-    .dashboard-sidebar ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
+  .dashboard-sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
 
-    .dashboard-sidebar ul li {
-        margin: 0.5rem;
-    }
+  .dashboard-sidebar ul li {
+    margin: 0.5rem;
+  }
 
-    .dashboard-sidebar h2 {
-        font-size: 1.25rem;
-    }
+  .dashboard-sidebar h2 {
+    font-size: 1.25rem;
+  }
 
-    .dashboard-main {
-        padding: 1.5rem;
-    }
+  .dashboard-main {
+    padding: 1.5rem;
+  }
 
-    .dashboard-hero h1 {
-        font-size: 2rem;
-    }
+  .dashboard-hero h1 {
+    font-size: 2rem;
+  }
 
-    .dashboard-hero p {
-        font-size: 1rem;
-    }
+  .dashboard-hero p {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 1rem;
-    }
+  header {
+    padding: 1rem;
+  }
 
-    .logo img {
-        width: 40px;
-        height: 40px;
-    }
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
 
-    nav ul {
-        flex-direction: column;
-        gap: 8px;
-    }
+  nav ul {
+    flex-direction: column;
+    gap: 8px;
+  }
 
-    nav ul li {
-        width: 100%;
-        text-align: center;
-    }
+  nav ul li {
+    width: 100%;
+    text-align: center;
+  }
 
-    .dashboard-main {
-        padding: 1rem;
-    }
+  .dashboard-main {
+    padding: 1rem;
+  }
 
-    .dashboard-hero h1 {
-        font-size: 1.5rem;
-    }
+  .dashboard-hero h1 {
+    font-size: 1.5rem;
+  }
 
-    .dashboard-hero p {
-        font-size: 0.9rem;
-    }
+  .dashboard-hero p {
+    font-size: 0.9rem;
+  }
 
-    .dropdown-sidebar {
-        left: auto;
-        right: 0;
-        transform: none;
-    }
+  .dropdown-sidebar {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
 }

@@ -31,6 +31,29 @@ db.run(`CREATE TABLE IF NOT EXISTS profiles (
   username TEXT UNIQUE NOT NULL,
   data TEXT NOT NULL
 )`);
+db.run(`CREATE TABLE IF NOT EXISTS settings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  key TEXT UNIQUE NOT NULL,
+  value TEXT NOT NULL
+)`);
+db.run(`CREATE TABLE IF NOT EXISTS cadets (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  course TEXT NOT NULL,
+  email TEXT NOT NULL
+)`);
+db.run(`CREATE TABLE IF NOT EXISTS instructors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL
+)`);
+db.run(`CREATE TABLE IF NOT EXISTS schedule (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  date TEXT NOT NULL,
+  activity TEXT NOT NULL,
+  time TEXT NOT NULL,
+  location TEXT NOT NULL
+)`);
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, "uploads");
@@ -38,6 +61,7 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 
 const upload = multer({ dest: uploadsDir });
 const uploadsMetaPath = path.join(__dirname, "uploads", "uploads.json");
+const schedulePath = path.join(__dirname, "schedule.json");
 
 // Helper to load and save uploads metadata
 function loadUploadsMeta() {
@@ -251,6 +275,94 @@ app.delete('/api/contact/messages/:id', (req, res) => {
       return res.status(404).json({ message: "Message not found." });
     }
     res.json({ message: "Message deleted." });
+  });
+});
+
+app.post('/api/admin/add-cadet', (req, res) => {
+  const { name, course, email } = req.body;
+  if (!name || !course || !email) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+  db.run(
+    "INSERT INTO cadets (name, course, email) VALUES (?, ?, ?)",
+    [name, course, email],
+    function(err) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Failed to add cadet." });
+      }
+      res.json({ message: "Cadet added successfully." });
+    }
+  );
+});
+
+// Update instructor info
+app.post('/api/admin/edit-instructor', (req, res) => {
+  const { id, name, email } = req.body;
+  if (!id || !name || !email) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+  db.run(
+    "UPDATE instructors SET name = ?, email = ? WHERE id = ?",
+    [name, email, id],
+    function(err) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Failed to update instructor." });
+      }
+      res.json({ message: "Instructor updated successfully." });
+    }
+  );
+});
+
+// Update a system setting
+app.post('/api/admin/system-settings', (req, res) => {
+  const { key, value } = req.body;
+  if (!key) return res.status(400).json({ message: "Key is required." });
+  db.run(
+    "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+    [key, value],
+    function(err) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Failed to update setting." });
+      }
+      res.json({ message: "Setting updated." });
+    }
+  );
+});
+
+app.get('/api/admin/backup', (req, res) => {
+  const dbPath = path.join(__dirname, 'messages.db'); // Use your actual SQLite file
+  res.download(dbPath, 'backup.sqlite', err => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Backup failed.");
+    }
+  });
+});
+
+// Get schedule
+app.get("/api/schedule", (req, res) => {
+  db.all("SELECT date, activity, time, location FROM schedule ORDER BY date ASC", [], (err, rows) => {
+    if (err) return res.status(500).json([]);
+    res.json(rows);
+  });
+});
+
+// Update (replace) schedule
+app.post("/api/schedule", (req, res) => {
+  const schedule = req.body; // Array of {date, activity, time, location}
+  db.serialize(() => {
+    db.run("DELETE FROM schedule");
+    const stmt = db.prepare("INSERT INTO schedule (date, activity, time, location) VALUES (?, ?, ?, ?)");
+    schedule.forEach(item => {
+      stmt.run(item.date, item.activity, item.time, item.location);
+    });
+    stmt.finalize(err => {
+      if (err) return res.status(500).json({ message: "Failed to save schedule." });
+      res.json({ message: "Schedule updated." });
+    });
   });
 });
 

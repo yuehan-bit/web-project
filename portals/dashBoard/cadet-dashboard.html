@@ -148,17 +148,7 @@
             <!-- Schedule Section -->
             <section id="schedule" class="dashboard-section">
                 <h2>Schedule</h2>
-                <ul class="schedule-list">
-                    <li>
-                        <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
-                    </li>
-                    <li>
-                        <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00, Lecture Hall A
-                    </li>
-                    <li>
-                        <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill Field
-                    </li>
-                </ul>
+                <ul class="schedule-list" id="schedule-list"></ul>
             </section>
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
@@ -166,6 +156,20 @@
                 <ul class="resource-list" id="resource-list"></ul>
             </section>
             <script>
+            // Load and display schedule for all users
+            async function loadSchedule() {
+              const res = await fetch('/api/schedule?_=' + Date.now());
+              const schedule = await res.json();
+              const list = document.getElementById('schedule-list');
+              list.innerHTML = '';
+              schedule.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${item.date}:</strong> ${item.activity} – ${item.time}, ${item.location}`;
+                list.appendChild(li);
+              });
+            }
+            document.addEventListener('DOMContentLoaded', loadSchedule);
+            // Load and display resources
             async function loadResources() {
               const res = await fetch('/api/resources');
               const files = await res.json();

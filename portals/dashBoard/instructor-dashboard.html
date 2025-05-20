@@ -173,22 +173,10 @@
 
             <!-- Schedule Section -->
             <section id="schedule" class="dashboard-section">
-                <h2>Schedule</h2>
-                <ul class="schedule-list">
-                    <li>
-                        <strong>May 20, 2025:</strong> Physical Training – 06:00-08:00, Parade Grounds
-                    </li>
-                    <li>
-                        <strong>May 22, 2025:</strong> Leadership Lab – 14:00-16:00, Lecture Hall A
-                    </li>
-                    <li>
-                        <strong>May 25, 2025:</strong> Drill Practice – 08:00-10:00, Drill Field
-                    </li>
-                    <li>
-                        <strong>May 28, 2025:</strong> Uniform Inspection – 09:00-11:00, HQ
-                    </li>
-                </ul>
-            </section>
+  <h2>Schedule</h2>
+  <ul class="schedule-list" id="schedule-list"></ul>
+  <button id="edit-schedule-btn" class="dashboard-link">Edit Schedule</button>
+</section>
 
             <!-- Resources Section -->
             <section id="resource" class="dashboard-section">
@@ -413,22 +401,23 @@ document.addEventListener('DOMContentLoaded', function() {
             <section id="tools" class="dashboard-section">
                 <h2>Admin</h2>
                 <ul class="admin-tools-list">
-                    <li>
-                        <span class="material-icons-sharp">person_add</span>
-                        <a href="#">Add New Cadet</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">edit</span>
-                        <a href="#">Edit Instructor Profiles</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">settings</span>
-                        <a href="#">System Settings</a>
-                    </li>
-                    <li>
-                        <span class="material-icons-sharp">backup</span>
-                        <a href="#">Backup Data</li>
-                </ul>
+    <li>
+        <span class="material-icons-sharp">person_add</span>
+        <a href="#" id="add-cadet-btn">Add New Cadet</a>
+    </li>
+    <li>
+        <span class="material-icons-sharp">edit</span>
+        <a href="#" id="edit-instructor-btn">Edit Instructor Profiles</a>
+    </li>
+    <li>
+        <span class="material-icons-sharp">settings</span>
+        <a href="#" id="system-settings-btn">System Settings</a>
+    </li>
+    <li>
+        <span class="material-icons-sharp">backup</span>
+        <a href="#" id="backup-data-btn">Backup Data</a>
+    </li>
+</ul>
             </section>
 
             <!-- Contact Messages Section -->
@@ -1043,5 +1032,295 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+// Modal helpers
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// Admin tool button handlers
+document.getElementById('add-cadet-btn').onclick = function(e) {
+    e.preventDefault();
+    openModal('add-cadet-modal');
+};
+document.getElementById('edit-instructor-btn').onclick = function(e) {
+    e.preventDefault();
+    openModal('edit-instructor-modal');
+};
+document.getElementById('system-settings-btn').onclick = function(e) {
+    e.preventDefault();
+    openModal('system-settings-modal');
+};
+document.getElementById('backup-data-btn').onclick = function(e) {
+    e.preventDefault();
+    openModal('backup-data-modal');
+};
+
+// Add Cadet form submission
+document.getElementById('add-cadet-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form));
+    const status = document.getElementById('add-cadet-status');
+    status.textContent = "Adding...";
+    const res = await fetch('/api/admin/add-cadet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    status.textContent = result.message || "Cadet added!";
+    if (res.ok) form.reset();
+};
+
+// Backup Data button
+document.getElementById('download-backup-btn').onclick = async function() {
+    const status = document.getElementById('backup-status');
+    status.textContent = "Preparing backup...";
+    const res = await fetch('/api/admin/backup');
+    if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "backup.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        status.textContent = "Backup downloaded!";
+    } else {
+        status.textContent = "Backup failed.";
+    }
+};
+</script>
+
+<!-- Add Cadet Modal -->
+<div id="add-cadet-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('add-cadet-modal')">&times;</span>
+    <h3>Add New Cadet</h3>
+    <form id="add-cadet-form">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="text" name="course" placeholder="Course/Year/Section" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button type="submit" class="dashboard-link">Add Cadet</button>
+    </form>
+    <div id="add-cadet-status"></div>
+  </div>
+</div>
+
+<!-- Edit Instructor Modal -->
+<div id="edit-instructor-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('edit-instructor-modal')">&times;</span>
+    <h3>Edit Instructor Profiles</h3>
+    <p>Feature coming soon.</p>
+  </div>
+</div>
+
+<!-- System Settings Modal -->
+<div id="system-settings-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('system-settings-modal')">&times;</span>
+    <h3>System Settings</h3>
+    <p>Feature coming soon.</p>
+  </div>
+</div>
+
+<!-- Backup Data Modal -->
+<div id="backup-data-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('backup-data-modal')">&times;</span>
+    <h3>Backup Data</h3>
+    <button id="download-backup-btn" class="dashboard-link">Download Backup</button>
+    <div id="backup-status"></div>
+  </div>
+</div>
+
+<style>
+.modal { position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; }
+.modal-content { background:#fff; padding:2em; border-radius:8px; min-width:300px; position:relative; }
+.close-modal { position:absolute; top:10px; right:20px; font-size:2em; cursor:pointer; }
+</style>
+
+<script>
+// Load and display schedule for all users
+async function loadSchedule() {
+  const res = await fetch('/api/schedule?_=' + Date.now());
+  const schedule = await res.json();
+  const list = document.getElementById('schedule-list');
+  list.innerHTML = '';
+  schedule.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${item.date}:</strong> ${item.activity} – ${item.time}, ${item.location}`;
+    list.appendChild(li);
+  });
+}
+document.addEventListener('DOMContentLoaded', loadSchedule);
+
+// Instructor: Edit schedule
+document.getElementById('edit-schedule-btn').onclick = function() {
+  openModal('edit-schedule-modal');
+  renderScheduleFields();
+
+  // Attach the handler each time the modal opens
+  setTimeout(() => {
+    const addRowBtn = document.getElementById('add-schedule-row');
+    if (addRowBtn) {
+      addRowBtn.onclick = function() {
+        const fields = document.getElementById('schedule-fields');
+        const div = document.createElement('div');
+        div.className = 'schedule-row';
+        div.innerHTML = `
+          <input type="text" name="date" placeholder="Date" required>
+          <input type="text" name="activity" placeholder="Activity" required>
+          <input type="text" name="time" placeholder="Time" required>
+          <input type="text" name="location" placeholder="Location" required>
+          <button type="button" class="remove-row-btn" style="color:#e53935;background:none;border:none;cursor:pointer;">&times;</button>
+        `;
+        div.querySelector('.remove-row-btn').onclick = function() {
+          div.remove();
+        };
+        fields.appendChild(div);
+      };
+    }
+  }, 0);
+};
+
+function renderScheduleFields() {
+  fetch('/api/schedule')
+    .then(res => res.json())
+    .then(schedule => {
+      const fields = document.getElementById('schedule-fields');
+      fields.innerHTML = '';
+      schedule.forEach((item, idx) => {
+        fields.innerHTML += `
+          <div class="schedule-row" data-idx="${idx}">
+            <input type="text" name="date" value="${item.date}" placeholder="Date" required>
+            <input type="text" name="activity" value="${item.activity}" placeholder="Activity" required>
+            <input type="text" name="time" value="${item.time}" placeholder="Time" required>
+            <input type="text" name="location" value="${item.location}" placeholder="Location" required>
+            <button type="button" class="remove-row-btn" style="color:#e53935;background:none;border:none;cursor:pointer;">&times;</button>
+          </div>
+        `;
+      });
+      // Add remove row handlers
+      fields.querySelectorAll('.remove-row-btn').forEach(btn => {
+        btn.onclick = function() {
+          btn.parentElement.remove();
+        };
+      });
+    });
+}
+
+// Add new row
+/* document.getElementById('add-schedule-row').onclick = function() {
+  const fields = document.getElementById('schedule-fields');
+  const div = document.createElement('div');
+  div.className = 'schedule-row';
+  div.innerHTML = `
+    <input type="text" name="date" placeholder="Date" required>
+    <input type="text" name="activity" placeholder="Activity" required>
+    <input type="text" name="time" placeholder="Time" required>
+    <input type="text" name="location" placeholder="Location" required>
+    <button type="button" class="remove-row-btn" style="color:#e53935;background:none;border:none;cursor:pointer;">&times;</button>
+  `;
+  div.querySelector('.remove-row-btn').onclick = function() {
+    div.remove();
+  };
+  fields.appendChild(div);
+}; */
+
+// Save schedule
+document.getElementById('schedule-form').onsubmit = async function(e) {
+  e.preventDefault();
+  const rows = document.querySelectorAll('.schedule-row');
+  const schedule = [];
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    schedule.push({
+      date: inputs[0].value,
+      activity: inputs[1].value,
+      time: inputs[2].value,
+      location: inputs[3].value
+    });
+  });
+  const status = document.getElementById('schedule-status');
+  status.textContent = "Saving...";
+  const res = await fetch('/api/schedule', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(schedule)
+  });
+  const result = await res.json();
+  status.textContent = result.message || "Saved!";
+  if (res.ok) {
+    setTimeout(() => {
+      closeModal('edit-schedule-modal');
+      loadSchedule();
+      status.textContent = "";
+    }, 500); // Give a short delay for DB write and UI update
+  }
+};
+</script>
+
+<!-- Place this OUTSIDE of #schedule and main content, just before </body>: -->
+<div id="edit-schedule-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('edit-schedule-modal')">&times;</span>
+    <h3>Edit Schedule</h3>
+    <form id="schedule-form">
+      <div id="schedule-fields"></div>
+      <button type="button" id="add-schedule-row" class="dashboard-link">Add Row</button>
+      <button type="submit" class="dashboard-link">Save</button>
+    </form>
+    <div id="schedule-status"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ... your other code ...
+
+  // Save schedule
+  const scheduleForm = document.getElementById('schedule-form');
+  if (scheduleForm) {
+    scheduleForm.onsubmit = async function(e) {
+      e.preventDefault();
+      const rows = document.querySelectorAll('.schedule-row');
+      const schedule = [];
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        schedule.push({
+          date: inputs[0].value,
+          activity: inputs[1].value,
+          time: inputs[2].value,
+          location: inputs[3].value
+        });
+      });
+      const status = document.getElementById('schedule-status');
+      status.textContent = "Saving...";
+      const res = await fetch('/api/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(schedule)
+      });
+      const result = await res.json();
+      status.textContent = result.message || "Saved!";
+      if (res.ok) {
+        setTimeout(() => {
+          closeModal('edit-schedule-modal');
+          loadSchedule();
+          status.textContent = "";
+        }, 500);
+      }
+    };
+  }
+});
+</script>
+
 </body>
 </html>

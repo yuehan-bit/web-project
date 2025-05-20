@@ -1855,10 +1855,10 @@ input:focus, select:focus, textarea:focus {
     margin-bottom: 0.5em;
   }
 }
-
+/* 
 /* Blue sidebar when scrolled */
-aside.scrolled, .sidebar.scrolled {
+/* aside.scrolled, .sidebar.scrolled {
     background: linear-gradient(180deg, #1976d2 80%, #1565c0 100%);
     box-shadow: 0 4px 24px rgba(25, 118, 210, 0.18);
     transition: background 0.4s, box-shadow 0.3s;
-}
+} */

@@ -221,6 +221,39 @@ app.post("/api/clear-signups", (req, res) => {
   });
 });
 
+app.delete('/api/resources/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', filename);
+  console.log('Attempting to delete:', filePath);
+  fs.unlink(filePath, err => {
+    if (err) {
+      console.error('Delete failed:', err);
+      return res.status(500).json({ message: 'Delete failed.' });
+    }
+
+    // Remove the file entry from uploads.json
+    let meta = loadUploadsMeta();
+    meta = meta.filter(file => file.filename !== filename);
+    saveUploadsMeta(meta);
+
+    res.json({ message: 'File deleted.' });
+  });
+});
+
+app.delete('/api/contact/messages/:id', (req, res) => {
+  const id = req.params.id;
+  db.run("DELETE FROM messages WHERE id = ?", [id], function(err) {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Database error." });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ message: "Message not found." });
+    }
+    res.json({ message: "Message deleted." });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

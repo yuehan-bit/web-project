@@ -1,0 +1,68 @@
+-- database: ./messages.db
+CREATE TABLE IF NOT EXISTS profiles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  data TEXT NOT NULL
+); -- creates table if it does not exist
+
+INSERT INTO profiles (username, data)
+VALUES ('23-3419', '{"email":"john@example.com"}');
+-- creates a new row in the table that has the username 23-3419 and data as a json object
+-- if the username already exists, it will throw an error
+-- INSERT INTO profiles (username, data)
+-- VALUES ('23-3419', '{"email":"
+
+UPDATE profiles
+SET data = '{"email":"patrickmigueltan@gmail.com"}'
+WHERE username = '23-3419';
+-- updates the data of the row that has the username 23-3419
+-- if the username does not exist, it will throw an error
+-- INSERT INTO profiles (username, data)
+-- VALUES ('23-3419', '{"email":"
+
+DELETE FROM profiles
+WHERE username = '23-3419';
+-- deletes the row that has the username 23-3419
+-- if the username does not exist, it will throw an error
+-- INSERT INTO profiles (username, data)
+-- VALUES ('23-3419', '{"email":"
+
+SELECT * FROM profiles;
+-- selects all the rows in the table
+
+SELECT * FROM profiles WHERE username = '12345';
+-- selects the row that has the username 12345
+-- if the username does not exist, it will throw an error
+
+SELECT 
+  profiles.username,
+  profiles.data,
+  signups.school_id,
+  signups.full_name,
+  signups.course_year_section
+FROM profiles
+LEFT JOIN signups
+  ON profiles.username = signups.school_id;
+--  selects all the rows in the profiles table and joins it with the signups table
+--  on the username and school_id columns
+--  if the username does not exist in the signups table, it will still show the row in the profiles table
+--  if the username does not exist in the profiles table, it will not show the row in the signups table
+--  if the username does not exist in both tables, it will not show the row in both tables
+--  if the username exists in both tables, it will show the row in both tables
+--  if the username exists in the profiles table but not in the signups table, it will show the row in the profiles table
+--  if the username exists in the signups table but not in the profiles table, it will not show the row in the signups table
+--  if the username exists in both tables, it will show the row in both tables
+
+
+SELECT 
+  signups.full_name,
+  signups.course_year_section,
+  profiles.username,
+  signups.school_id
+FROM profiles
+INNER JOIN signups
+  ON profiles.username = signups.school_id;
+-- selects all the rows in the profiles table and inner joins it with the signups table
+--  on the username and school_id columns
+
+--maam sqlite3 doesnt support dcl po
